@@ -1,0 +1,63 @@
+<!--pages/products/products.wxml-->
+<view class="container">
+  <!-- 产品分类 -->
+  <view class="category-tabs">
+    <view 
+      class="tab-item {{currentCategory === 'all' ? 'active' : ''}}" 
+      bindtap="switchCategory" 
+      data-category="all"
+    >全部</view>
+    <view 
+      class="tab-item {{currentCategory === 'product1' ? 'active' : ''}}" 
+      bindtap="switchCategory" 
+      data-category="product1"
+    >核心产品</view>
+    <view 
+      class="tab-item {{currentCategory === 'product2' ? 'active' : ''}}" 
+      bindtap="switchCategory" 
+      data-category="product2"
+    >技术服务</view>
+    <view 
+      class="tab-item {{currentCategory === 'product3' ? 'active' : ''}}" 
+      bindtap="switchCategory" 
+      data-category="product3"
+    >解决方案</view>
+  </view>
+
+  <!-- 产品列表 -->
+  <view class="product-list">
+    <view 
+      class="product-card" 
+      wx:for="{{filteredProducts}}" 
+      wx:key="id"
+      bindtap="goToProductDetail"
+      data-id="{{item.id}}"
+    >
+      <view class="product-image">
+        <text class="product-icon">{{item.icon}}</text>
+      </view>
+      <view class="product-info">
+        <view class="product-name">{{item.name}}</view>
+        <view class="product-desc">{{item.description}}</view>
+        <view class="product-tags">
+          <text class="tag" wx:for="{{item.tags}}" wx:key="*this">{{item}}</text>
+        </view>
+      </view>
+      <view class="product-arrow">›</view>
+    </view>
+  </view>
+
+  <!-- 服务优势 -->
+  <view class="card">
+    <view class="section-title">服务优势</view>
+    <view class="advantage-list">
+      <view class="advantage-item" wx:for="{{advantages}}" wx:key="id">
+        <view class="advantage-icon">{{item.icon}}</view>
+        <view class="advantage-content">
+          <view class="advantage-title">{{item.title}}</view>
+          <view class="advantage-desc">{{item.desc}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

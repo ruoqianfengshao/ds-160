@@ -1,0 +1,32 @@
+<!--pages/news/news.wxml-->
+<view class="container">
+  <view class="news-list">
+    <view 
+      class="news-card" 
+      wx:for="{{newsList}}" 
+      wx:key="id"
+      bindtap="goToNewsDetail"
+      data-id="{{item.id}}"
+    >
+      <view class="news-image">
+        <text class="news-icon">{{item.icon}}</text>
+      </view>
+      <view class="news-content">
+        <view class="news-title">{{item.title}}</view>
+        <view class="news-summary">{{item.summary}}</view>
+        <view class="news-footer">
+          <text class="news-date">{{item.date}}</text>
+          <text class="news-category">{{item.category}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 加载更多 -->
+  <view class="load-more" wx:if="{{hasMore}}">
+    <text>加载更多...</text>
+  </view>
+  <view class="no-more" wx:else>
+    <text>没有更多了</text>
+  </view>
+</view>

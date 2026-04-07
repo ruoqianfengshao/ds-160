@@ -1,0 +1,124 @@
+<!--pages/contact/contact.wxml-->
+<view class="container">
+  <!-- 联系方式卡片 -->
+  <view class="card contact-card">
+    <view class="section-title">联系方式</view>
+    <view class="contact-list">
+      <view class="contact-item" bindtap="makeCall">
+        <view class="contact-icon-wrapper phone">
+          <text class="contact-icon">📞</text>
+        </view>
+        <view class="contact-info">
+          <view class="contact-label">联系电话</view>
+          <view class="contact-value">{{companyInfo.phone}}</view>
+        </view>
+        <view class="contact-action">拨打</view>
+      </view>
+
+      <view class="contact-item" bindtap="sendEmail">
+        <view class="contact-icon-wrapper email">
+          <text class="contact-icon">📧</text>
+        </view>
+        <view class="contact-info">
+          <view class="contact-label">电子邮箱</view>
+          <view class="contact-value">{{companyInfo.email}}</view>
+        </view>
+        <view class="contact-action">发送</view>
+      </view>
+
+      <view class="contact-item" bindtap="copyAddress">
+        <view class="contact-icon-wrapper address">
+          <text class="contact-icon">📍</text>
+        </view>
+        <view class="contact-info">
+          <view class="contact-label">公司地址</view>
+          <view class="contact-value">{{companyInfo.address}}</view>
+        </view>
+        <view class="contact-action">复制</view>
+      </view>
+
+      <view class="contact-item" bindtap="openMap">
+        <view class="contact-icon-wrapper map">
+          <text class="contact-icon">🗺️</text>
+        </view>
+        <view class="contact-info">
+          <view class="contact-label">导航前往</view>
+          <view class="contact-value">点击打开地图</view>
+        </view>
+        <view class="contact-action">导航</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 工作时间 -->
+  <view class="card">
+    <view class="section-title">工作时间</view>
+    <view class="work-time">
+      <view class="time-item">
+        <text class="time-label">工作日：</text>
+        <text class="time-value">周一至周五 9:00 - 18:00</text>
+      </view>
+      <view class="time-item">
+        <text class="time-label">节假日：</text>
+        <text class="time-value">周末双休及法定节假日</text>
+      </view>
+      <view class="time-tip">💡 非工作时间如有紧急事务，请拨打 24 小时服务热线</view>
+    </view>
+  </view>
+
+  <!-- 在线留言 -->
+  <view class="card">
+    <view class="section-title">在线留言</view>
+    <view class="message-form">
+      <view class="form-item">
+        <input 
+          class="form-input" 
+          placeholder="您的姓名" 
+          value="{{formData.name}}"
+          bindinput="onInput"
+          data-field="name"
+        />
+      </view>
+      <view class="form-item">
+        <input 
+          class="form-input" 
+          placeholder="联系电话" 
+          type="number"
+          value="{{formData.phone}}"
+          bindinput="onInput"
+          data-field="phone"
+        />
+      </view>
+      <view class="form-item">
+        <textarea 
+          class="form-textarea" 
+          placeholder="请输入您想咨询的内容..." 
+          maxlength="500"
+          value="{{formData.message}}"
+          bindinput="onInput"
+          data-field="message"
+        />
+      </view>
+      <button class="btn-submit" bindtap="submitMessage">提交留言</button>
+    </view>
+  </view>
+
+  <!-- 社交媒体 -->
+  <view class="card">
+    <view class="section-title">关注我们</view>
+    <view class="social-links">
+      <view class="social-item">
+        <view class="social-icon">💬</view>
+        <text class="social-name">微信公众号</text>
+      </view>
+      <view class="social-item">
+        <view class="social-icon">🎵</view>
+        <text class="social-name">抖音官方号</text>
+      </view>
+      <view class="social-item">
+        <view class="social-icon">📱</view>
+        <text class="social-name">企业微信</text>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,118 @@
+/* pages/about/about.wxss */
+.about-content {
+  line-height: 2;
+}
+
+.about-text {
+  font-size: 28rpx;
+  color: #666;
+  white-space: pre-wrap;
+}
+
+.culture-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24rpx;
+}
+
+.culture-item {
+  display: flex;
+  align-items: flex-start;
+  padding: 20rpx;
+  background: #f9f9f9;
+  border-radius: 12rpx;
+}
+
+.culture-icon {
+  font-size: 48rpx;
+  margin-right: 20rpx;
+}
+
+.culture-content {
+  flex: 1;
+}
+
+.culture-title {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8rpx;
+}
+
+.culture-desc {
+  font-size: 26rpx;
+  color: #666;
+}
+
+.timeline {
+  position: relative;
+  padding-left: 40rpx;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 10rpx;
+  top: 0;
+  bottom: 0;
+  width: 4rpx;
+  background: #1890ff;
+  border-radius: 2rpx;
+}
+
+.timeline-item {
+  position: relative;
+  padding-bottom: 40rpx;
+}
+
+.timeline-year {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #1890ff;
+  margin-bottom: 8rpx;
+}
+
+.timeline-dot {
+  position: absolute;
+  left: -36rpx;
+  top: 6rpx;
+  width: 24rpx;
+  height: 24rpx;
+  background: #1890ff;
+  border-radius: 50%;
+  border: 4rpx solid #fff;
+  box-shadow: 0 2rpx 8rpx rgba(24, 144, 255, 0.3);
+}
+
+.timeline-event {
+  font-size: 28rpx;
+  color: #666;
+  padding-left: 20rpx;
+}
+
+.honor-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20rpx;
+}
+
+.honor-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30rpx 20rpx;
+  background: #fffbe6;
+  border-radius: 12rpx;
+  border: 2rpx solid #ffe58f;
+}
+
+.honor-icon {
+  font-size: 56rpx;
+  margin-bottom: 16rpx;
+}
+
+.honor-name {
+  font-size: 26rpx;
+  color: #666;
+  text-align: center;
+}

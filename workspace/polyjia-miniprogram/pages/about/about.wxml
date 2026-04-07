@@ -1,0 +1,67 @@
+<!--pages/about/about.wxml-->
+<view class="container">
+  <!-- 公司介绍 -->
+  <view class="card">
+    <view class="section-title">公司介绍</view>
+    <view class="about-content">
+      <text class="about-text">
+        浙江保丽加科技有限公司成立于浙江省，是一家专注于科技创新与产品研发的现代化企业。
+        \n\n
+        公司拥有一支高素质的研发团队和先进的生产设备，致力于为客户提供高质量的产品和优质的服务。
+        \n\n
+        我们秉承"创新、品质、诚信、共赢"的企业理念，不断探索技术创新，提升产品品质，满足客户多样化需求。
+      </text>
+    </view>
+  </view>
+
+  <!-- 企业文化 -->
+  <view class="card">
+    <view class="section-title">企业文化</view>
+    <view class="culture-list">
+      <view class="culture-item">
+        <view class="culture-icon">🎯</view>
+        <view class="culture-content">
+          <view class="culture-title">企业愿景</view>
+          <view class="culture-desc">成为行业领先的科技创新企业</view>
+        </view>
+      </view>
+      <view class="culture-item">
+        <view class="culture-icon">💡</view>
+        <view class="culture-content">
+          <view class="culture-title">企业使命</view>
+          <view class="culture-desc">用科技创造价值，以服务赢得信任</view>
+        </view>
+      </view>
+      <view class="culture-item">
+        <view class="culture-icon">⭐</view>
+        <view class="culture-content">
+          <view class="culture-title">核心价值观</view>
+          <view class="culture-desc">创新、品质、诚信、共赢</view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 发展历程 -->
+  <view class="card">
+    <view class="section-title">发展历程</view>
+    <view class="timeline">
+      <view class="timeline-item" wx:for="{{timeline}}" wx:key="year">
+        <view class="timeline-year">{{item.year}}</view>
+        <view class="timeline-dot"></view>
+        <view class="timeline-event">{{item.event}}</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 荣誉资质 -->
+  <view class="card">
+    <view class="section-title">荣誉资质</view>
+    <view class="honor-list">
+      <view class="honor-item" wx:for="{{honors}}" wx:key="id">
+        <view class="honor-icon">🏆</view>
+        <view class="honor-name">{{item.name}}</view>
+      </view>
+    </view>
+  </view>
+</view>

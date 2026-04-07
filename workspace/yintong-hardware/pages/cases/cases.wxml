@@ -1,0 +1,36 @@
+<!--pages/cases/cases.wxml - 案例展示-->
+<view class="container">
+  <!-- 案例列表 -->
+  <view class="cases-list">
+    <view 
+      wx:for="{{cases}}" 
+      wx:key="id" 
+      class="case-card card"
+      bindtap="previewCaseImages"
+      data-case="{{item}}"
+    >
+      <image src="{{item.coverImage}}" mode="aspectFill" class="case-cover"></image>
+      <view class="case-info">
+        <view class="case-title">{{item.title}}</view>
+        <view class="case-desc">{{item.description}}</view>
+        <view class="case-industry">
+          <text class="industry-icon">🏷️</text>
+          <text class="industry-text">{{item.industry}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空状态提示 -->
+  <view wx:if="{{cases.length === 0}}" class="empty-state">
+    <text class="empty-icon">📋</text>
+    <text class="empty-text">暂无案例展示</text>
+    <view class="empty-tip">如有合作案例，欢迎联系我们添加</view>
+  </view>
+
+  <!-- 底部联系提示 -->
+  <view class="contact-tip card">
+    <text class="tip-text">想了解我们的产品和服务？</text>
+    <button class="btn-primary btn-small" bindtap="makePhoneCall">立即咨询</button>
+  </view>
+</view>

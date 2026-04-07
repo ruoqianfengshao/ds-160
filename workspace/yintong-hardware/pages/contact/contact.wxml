@@ -1,0 +1,61 @@
+<!--pages/contact/contact.wxml - 联系我们-->
+<view class="container">
+  <!-- 公司信息卡片 -->
+  <view class="card company-info">
+    <view class="contact-item" bindtap="makePhoneCall">
+      <text class="contact-icon">📞</text>
+      <view class="contact-content">
+        <text class="contact-label">联系电话</text>
+        <text class="contact-value">{{phoneNumber}}</text>
+      </view>
+      <text class="arrow-icon">›</text>
+    </view>
+
+    <view class="contact-item" bindtap="copyAddress">
+      <text class="contact-icon">📍</text>
+      <view class="contact-content">
+        <text class="contact-label">公司地址</text>
+        <text class="contact-value">{{address}}</text>
+      </view>
+      <text class="arrow-icon">›</text>
+    </view>
+
+    <view class="contact-item" wx:if="{{email}}">
+      <text class="contact-icon">✉️</text>
+      <view class="contact-content">
+        <text class="contact-label">电子邮箱</text>
+        <text class="contact-value">{{email}}</text>
+      </view>
+      <text class="arrow-icon">›</text>
+    </view>
+  </view>
+
+  <!-- 快捷操作按钮 -->
+  <view class="card action-buttons-card">
+    <view class="action-buttons-large">
+      <button class="action-btn-large btn-call" bindtap="makePhoneCall">
+        <text class="btn-large-icon">📞</text>
+        <text class="btn-large-text">立即拨打</text>
+      </button>
+      <button class="action-btn-large btn-nav" bindtap="openMap">
+        <text class="btn-large-icon">🗺️</text>
+        <text class="btn-large-text">导航到厂</text>
+      </button>
+    </view>
+  </view>
+
+  <!-- 地图 -->
+  <view class="card map-card">
+    <view class="section-title">公司位置</view>
+    <map
+      id="companyMap"
+      class="map"
+      latitude="{{latitude}}"
+      longitude="{{longitude}}"
+      scale="16"
+      markers="{{markers}}"
+      show-location="{{true}}"
+    ></map>
+    <view class="map-tip">点击地图可查看详情</view>
+  </view>
+</view>

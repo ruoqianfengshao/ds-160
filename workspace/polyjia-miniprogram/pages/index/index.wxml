@@ -1,0 +1,64 @@
+<!--pages/index/index.wxml-->
+<view class="container">
+  <!-- 头部 Banner -->
+  <view class="banner">
+    <view class="banner-content">
+      <text class="company-name">浙江保丽加科技有限公司</text>
+      <text class="slogan">创新科技 · 品质服务</text>
+    </view>
+  </view>
+
+  <!-- 公司简介卡片 -->
+  <view class="card intro-card">
+    <view class="section-title">公司简介</view>
+    <text class="intro-text">
+      浙江保丽加科技有限公司是一家专注于科技创新的现代化企业，致力于为客户提供优质的产品与服务。
+      公司秉承"创新、品质、服务"的理念，不断发展壮大。
+    </text>
+    <button class="btn-primary" bindtap="goToAbout">了解更多</button>
+  </view>
+
+  <!-- 核心业务 -->
+  <view class="card">
+    <view class="section-title">核心业务</view>
+    <view class="business-grid">
+      <view class="business-item" wx:for="{{businessList}}" wx:key="id">
+        <view class="business-icon">{{item.icon}}</view>
+        <view class="business-name">{{item.name}}</view>
+        <view class="business-desc">{{item.desc}}</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 公司动态 -->
+  <view class="card">
+    <view class="section-title">公司动态</view>
+    <view class="news-list">
+      <view class="news-item" wx:for="{{newsList}}" wx:key="id" bindtap="goToNews">
+        <view class="news-title">{{item.title}}</view>
+        <view class="news-date">{{item.date}}</view>
+      </view>
+    </view>
+    <button class="btn-more" bindtap="goToNewsList">查看更多</button>
+  </view>
+
+  <!-- 快速联系 -->
+  <view class="card contact-card">
+    <view class="section-title">快速联系</view>
+    <view class="contact-info">
+      <view class="contact-item">
+        <text class="contact-icon">📞</text>
+        <text class="contact-text">{{globalData.companyPhone}}</text>
+      </view>
+      <view class="contact-item">
+        <text class="contact-icon">📧</text>
+        <text class="contact-text">{{globalData.companyEmail}}</text>
+      </view>
+      <view class="contact-item">
+        <text class="contact-icon">📍</text>
+        <text class="contact-text">{{globalData.companyAddress}}</text>
+      </view>
+    </view>
+    <button class="btn-primary" bindtap="makeCall">立即致电</button>
+  </view>
+</view>

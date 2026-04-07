@@ -1,0 +1,102 @@
+/* pages/about/about.wxss - 关于我们样式 */
+.company-card {
+  text-align: center;
+}
+
+.company-name {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #1E88E5;
+  margin: 10rpx 0 20rpx;
+}
+
+.company-intro {
+  font-size: 28rpx;
+  color: #666666;
+  line-height: 1.8;
+  text-align: left;
+}
+
+.equipment-list {
+  padding: 10rpx 0;
+}
+
+.equipment-item {
+  display: flex;
+  align-items: center;
+  padding: 16rpx 0;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.equipment-item:last-child {
+  border-bottom: none;
+}
+
+.equipment-icon {
+  font-size: 36rpx;
+  margin-right: 16rpx;
+}
+
+.equipment-text {
+  font-size: 28rpx;
+  color: #333333;
+}
+
+.certificates {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.certificate-image {
+  width: 48%;
+  height: 300rpx;
+  background-color: #f0f0f0;
+  margin-bottom: 20rpx;
+  border-radius: 8rpx;
+}
+
+.empty-cert {
+  text-align: center;
+  padding: 40rpx 0;
+}
+
+.empty-text {
+  font-size: 26rpx;
+  color: #999999;
+}
+
+.advantages {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.advantage-item {
+  width: 48%;
+  background-color: #f8f9fa;
+  padding: 24rpx;
+  border-radius: 8rpx;
+  margin-bottom: 20rpx;
+  text-align: center;
+}
+
+.advantage-num {
+  font-size: 40rpx;
+  font-weight: bold;
+  color: #1E88E5;
+  opacity: 0.3;
+  margin-bottom: 10rpx;
+}
+
+.advantage-title {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #333333;
+  margin-bottom: 8rpx;
+}
+
+.advantage-desc {
+  font-size: 24rpx;
+  color: #999999;
+}

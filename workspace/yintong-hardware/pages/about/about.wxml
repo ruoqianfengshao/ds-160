@@ -1,0 +1,68 @@
+<!--pages/about/about.wxml - 关于我们-->
+<view class="container">
+  <!-- 公司简介 -->
+  <view class="card company-card">
+    <view class="section-title">关于我们</view>
+    <view class="company-name">慈溪坎墩银通五金配件厂</view>
+    <view class="company-intro">
+      <text>{{companyIntro}}</text>
+    </view>
+  </view>
+
+  <!-- 厂房设备 -->
+  <view class="card">
+    <view class="section-title">厂房设备</view>
+    <view class="equipment-list">
+      <view wx:for="{{equipment}}" wx:key="index" class="equipment-item">
+        <text class="equipment-icon">🏭</text>
+        <text class="equipment-text">{{item}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 资质证书 -->
+  <view class="card">
+    <view class="section-title">资质证书</view>
+    <view class="certificates">
+      <image 
+        wx:for="{{certificates}}" 
+        wx:key="index"
+        src="{{item}}" 
+        mode="aspectFit" 
+        class="certificate-image"
+        bindtap="previewCertificate"
+        data-index="{{index}}"
+      ></image>
+    </view>
+    <view wx:if="{{certificates.length === 0}}" class="empty-cert">
+      <text class="empty-text">证书图片待上传</text>
+    </view>
+  </view>
+
+  <!-- 核心优势 -->
+  <view class="card">
+    <view class="section-title">我们的优势</view>
+    <view class="advantages">
+      <view class="advantage-item">
+        <view class="advantage-num">01</view>
+        <view class="advantage-title">多年经验</view>
+        <view class="advantage-desc">专注五金制造行业多年</view>
+      </view>
+      <view class="advantage-item">
+        <view class="advantage-num">02</view>
+        <view class="advantage-title">品质保证</view>
+        <view class="advantage-desc">严格质量控制体系</view>
+      </view>
+      <view class="advantage-item">
+        <view class="advantage-num">03</view>
+        <view class="advantage-title">定制服务</view>
+        <view class="advantage-desc">支持来图来样定制</view>
+      </view>
+      <view class="advantage-item">
+        <view class="advantage-num">04</view>
+        <view class="advantage-title">快速交付</view>
+        <view class="advantage-desc">高效生产，准时交货</view>
+      </view>
+    </view>
+  </view>
+</view>

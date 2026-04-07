@@ -1,0 +1,79 @@
+<!--pages/index/index.wxml - 首页-->
+<view class="container">
+  <!-- 轮播图 -->
+  <swiper class="banner" indicator-dots="{{true}}" autoplay="{{true}}" interval="3000" duration="500">
+    <swiper-item wx:for="{{banners}}" wx:key="index">
+      <image src="{{item}}" mode="aspectFill" class="banner-image"></image>
+    </swiper-item>
+  </swiper>
+
+  <!-- 公司简介 -->
+  <view class="card intro-card">
+    <view class="section-title">慈溪坎墩银通五金配件厂</view>
+    <view class="section-subtitle">非标紧固件·异形零部件·冷墩加工</view>
+    <view class="intro-text">
+      专注于非标准紧固件及异形金属零部件冷墩加工，为客户提供高品质、高精度的定制化产品解决方案。
+    </view>
+  </view>
+
+  <!-- 核心优势 -->
+  <view class="card">
+    <view class="section-title">我们的优势</view>
+    <view class="advantages">
+      <view class="advantage-item">
+        <text class="advantage-icon">🏭</text>
+        <text class="advantage-text">源头厂家</text>
+      </view>
+      <view class="advantage-item">
+        <text class="advantage-icon">✅</text>
+        <text class="advantage-text">品质保证</text>
+      </view>
+      <view class="advantage-item">
+        <text class="advantage-icon">🚚</text>
+        <text class="advantage-text">快速发货</text>
+      </view>
+      <view class="advantage-item">
+        <text class="advantage-icon">💰</text>
+        <text class="advantage-text">价格实惠</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 产品分类入口 -->
+  <view class="card">
+    <view class="section-title">产品中心</view>
+    <view class="product-grid">
+      <view 
+        wx:for="{{productCategories}}" 
+        wx:key="name"
+        class="product-category-item"
+        bindtap="goToProducts"
+        data-category="{{item.name}}"
+      >
+        <view class="category-image-wrapper">
+          <image src="{{item.image}}" mode="aspectFill" class="category-image"></image>
+        </view>
+        <view class="category-name">{{item.name}}</view>
+      </view>
+    </view>
+    <view class="view-all-btn" bindtap="goToProducts">
+      <text>查看全部产品 ›</text>
+    </view>
+  </view>
+
+  <!-- 快速联系 -->
+  <view class="card contact-card">
+    <view class="section-title">联系我们</view>
+    <view class="contact-info">
+      <view class="contact-item">
+        <text class="contact-icon">📞</text>
+        <text class="contact-text">{{phoneNumber}}</text>
+      </view>
+      <view class="contact-item">
+        <text class="contact-icon">📍</text>
+        <text class="contact-text">{{address}}</text>
+      </view>
+    </view>
+    <button class="btn-primary" bindtap="makePhoneCall">立即拨打</button>
+  </view>
+</view>
