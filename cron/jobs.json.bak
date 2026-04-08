@@ -8,7 +8,7 @@
       "name": "每日推送claudecode最热动态",
       "enabled": true,
       "createdAtMs": 1775529707153,
-      "updatedAtMs": 1775610139959,
+      "updatedAtMs": 1775529707153,
       "schedule": {
         "kind": "cron",
         "expr": "0 9 * * *",
@@ -27,14 +27,8 @@
         "channel": "feishu"
       },
       "state": {
-        "nextRunAtMs": 1775696400000,
-        "lastRunAtMs": 1775610000003,
-        "lastRunStatus": "ok",
-        "lastStatus": "ok",
-        "lastDurationMs": 139956,
-        "lastDelivered": true,
-        "lastDeliveryStatus": "delivered",
-        "consecutiveErrors": 0
+        "nextRunAtMs": 1775610000000,
+        "runningAtMs": 1775610000002
       }
     }
   ]
