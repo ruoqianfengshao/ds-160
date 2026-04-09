@@ -8,11 +8,12 @@
       "name": "每日推送claudecode最热动态",
       "enabled": true,
       "createdAtMs": 1775529707153,
-      "updatedAtMs": 1775610139959,
+      "updatedAtMs": 1775696920022,
       "schedule": {
         "kind": "cron",
         "expr": "0 9 * * *",
-        "tz": "Asia/Shanghai"
+        "tz": "Asia/Shanghai",
+        "staggerMs": 900000
       },
       "sessionTarget": "isolated",
       "wakeMode": "now",
@@ -27,14 +28,50 @@
         "channel": "feishu"
       },
       "state": {
-        "nextRunAtMs": 1775696400000,
-        "lastRunAtMs": 1775610000003,
+        "nextRunAtMs": 1775783219445,
+        "lastRunAtMs": 1775696819450,
         "lastRunStatus": "ok",
         "lastStatus": "ok",
-        "lastDurationMs": 139956,
+        "lastDurationMs": 100572,
         "lastDelivered": true,
         "lastDeliveryStatus": "delivered",
         "consecutiveErrors": 0
+      }
+    },
+    {
+      "id": "02447d85-5dcc-4b40-b843-3693485fa0b3",
+      "agentId": "main",
+      "sessionKey": "agent:main:feishu:direct:ou_c1435b3d813e202c2f8dda9e6cf0de25",
+      "name": "每日推送cursor相关动态",
+      "enabled": true,
+      "createdAtMs": 1775706653599,
+      "updatedAtMs": 1775707071639,
+      "schedule": {
+        "kind": "cron",
+        "expr": "10 9 * * *",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "请帮我获取最新cursor编辑器相关的最热动态，包括github热门项目、最新工具发布、相关新闻资讯、优秀插件推荐、使用技巧分享，整理成清晰的内容推送给用户ou_c1435b3d813e202c2f8dda9e6cf0de25",
+        "timeoutSeconds": 300
+      },
+      "delivery": {
+        "mode": "announce",
+        "to": "ou_c1435b3d813e202c2f8dda9e6cf0de25",
+        "channel": "feishu"
+      },
+      "state": {
+        "nextRunAtMs": 1775783400000,
+        "lastRunAtMs": 1775706771630,
+        "lastRunStatus": "error",
+        "lastStatus": "error",
+        "lastDurationMs": 300009,
+        "lastError": "Error: cron: job execution timed out",
+        "lastDeliveryStatus": "unknown",
+        "consecutiveErrors": 1
       }
     }
   ]
