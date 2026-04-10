@@ -1,7 +1,7 @@
 {
   "meta": {
     "lastTouchedVersion": "2026.3.8",
-    "lastTouchedAt": "2026-04-09T19:02:09.140Z"
+    "lastTouchedAt": "2026-04-10T09:18:52.129Z"
   },
   "wizard": {
     "lastRunAt": "2026-03-05T11:15:21.053Z",
@@ -112,7 +112,7 @@
           },
           {
             "id": "glm-5",
-            "name": "GLM-5",
+            "name": "GLM-5.1",
             "api": "openai-completions",
             "reasoning": true,
             "input": [
@@ -128,8 +128,8 @@
             "maxTokens": 30000
           },
           {
-            "id": "qwen-3.5",
-            "name": "Qwen 3.5",
+            "id": "qwen-3.6-plus",
+            "name": "Qwen 3.6",
             "api": "openai-completions",
             "reasoning": true,
             "input": [
@@ -146,8 +146,8 @@
             "maxTokens": 16000
           },
           {
-            "id": "minimax-m2.5",
-            "name": "MiniMax M2.5",
+            "id": "minimax-m2.7",
+            "name": "MiniMax M2.7",
             "api": "openai-completions",
             "reasoning": false,
             "input": [
@@ -181,13 +181,37 @@
             "maxTokens": 16000
           }
         ]
+      },
+      "erda": {
+        "baseUrl": "https://ai-proxy.erda.cloud/v1",
+        "apiKey": "t_4e0ca0463fad462d9687ce501ee00e84",
+        "api": "openai-completions",
+        "models": [
+          {
+            "id": "qwen/qwen-plus",
+            "name": "qwen/qwen-plus",
+            "api": "openai-completions",
+            "reasoning": false,
+            "input": [
+              "text"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 200000,
+            "maxTokens": 8192
+          }
+        ]
       }
     }
   },
   "agents": {
     "defaults": {
       "model": {
-        "primary": "miaoda/miaoda-model-auto"
+        "primary": "erda/qwen/qwen-plus"
       },
       "imageModel": "miaoda/miaoda-auto-multimodal",
       "models": {
@@ -201,16 +225,19 @@
           "alias": "Miaoda Flash"
         },
         "miaoda/glm-5": {
-          "alias": "GLM-5"
-        },
-        "miaoda/qwen-3.5": {
-          "alias": "Qwen 3.5"
-        },
-        "miaoda/minimax-m2.5": {
-          "alias": "MiniMax M2.5"
+          "alias": "GLM-5.1"
         },
         "miaoda/doubao-seed-2.0-pro": {
           "alias": "豆包 Seed 2.0 Pro"
+        },
+        "miaoda/qwen-3.6-plus": {
+          "alias": "Qwen 3.6"
+        },
+        "miaoda/minimax-m2.7": {
+          "alias": "MiniMax M2.7"
+        },
+        "erda/qwen/qwen-plus": {
+          "alias": "qwen/qwen-plus"
         }
       },
       "workspace": "/home/gem/workspace/agent/workspace",
@@ -470,7 +497,8 @@
       "openclaw-lark",
       "feishu-greeting",
       "miaoda-keepalive",
-      "openclaw-extension-miaoda"
+      "openclaw-extension-miaoda",
+      "openclaw-extension-miaoda-coding"
     ],
     "entries": {
       "feishu": {
@@ -537,8 +565,9 @@
         "resolvedVersion": "1.0.8",
         "resolvedSpec": "@lark-apaas/openclaw-extension-miaoda-coding@1.0.8",
         "integrity": "sha512-uxlLtgH2CTwz56UTaZD+n/x1p2a3Q01o3Og7oLUJCm6izWHXFEI1SQhNnCPggrfSam49KFir8xB64tY4T9dt2Q==",
-        "resolvedAt": "2026-04-09T19:01:51.098Z",
-        "installedAt": "2026-04-09T19:01:51.098Z"
+        "shasum": "058eadf5bc71ae87f79b5096b9d96f4afb89a9db",
+        "resolvedAt": "2026-04-10T05:31:50.766Z",
+        "installedAt": "2026-04-10T05:31:50.787Z"
       }
     }
   }

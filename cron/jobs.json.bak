@@ -8,7 +8,7 @@
       "name": "每日推送claudecode最热动态",
       "enabled": true,
       "createdAtMs": 1775529707153,
-      "updatedAtMs": 1775783519465,
+      "updatedAtMs": 1775784714431,
       "schedule": {
         "kind": "cron",
         "expr": "0 9 * * *",
@@ -29,13 +29,13 @@
       },
       "state": {
         "nextRunAtMs": 1775869619445,
-        "lastRunAtMs": 1775783219450,
+        "lastRunAtMs": 1775784414420,
         "lastRunStatus": "error",
         "lastStatus": "error",
-        "lastDurationMs": 300015,
+        "lastDurationMs": 300011,
         "lastDeliveryStatus": "unknown",
-        "consecutiveErrors": 1,
-        "runningAtMs": 1775784414420
+        "consecutiveErrors": 2,
+        "lastError": "Error: cron: job execution timed out"
       }
     },
     {
@@ -72,6 +72,73 @@
         "lastDeliveryStatus": "delivered",
         "consecutiveErrors": 0,
         "lastDelivered": true
+      }
+    },
+    {
+      "id": "1dace71d-52e3-469e-8325-7c74da11bc41",
+      "agentId": "main",
+      "sessionKey": "agent:main:feishu:direct:ou_c1435b3d813e202c2f8dda9e6cf0de25",
+      "name": "每日跨境高溢价工艺品商品推送",
+      "enabled": true,
+      "createdAtMs": 1775812372409,
+      "updatedAtMs": 1775812372409,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 10 * * *",
+        "tz": "Asia/Shanghai",
+        "staggerMs": 900000
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "请帮我搜索并整理30个符合以下要求的跨境高溢价商品：1. 考虑汇率情况下溢价15倍以上 2. 体积不大，成本不超过100元人民币 3. 主要在工艺品方向。请为每个商品提供名称、国内成本、海外售价、溢价倍数、商品链接和简要分析，整理成清晰的Markdown格式推送给用户ou_c1435b3d813e202c2f8dda9e6cf0de25。",
+        "timeoutSeconds": 600
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "feishu",
+        "to": "ou_c1435b3d813e202c2f8dda9e6cf0de25"
+      },
+      "state": {
+        "nextRunAtMs": 1775873025189
+      }
+    },
+    {
+      "id": "8a38a77e-1576-4380-899a-9a0b3dd91c95",
+      "agentId": "main",
+      "sessionKey": "agent:main:feishu:direct:ou_c1435b3d813e202c2f8dda9e6cf0de25",
+      "name": "AG2开发任务监控",
+      "enabled": true,
+      "createdAtMs": 1775840041454,
+      "updatedAtMs": 1775848860133,
+      "schedule": {
+        "kind": "cron",
+        "expr": "*/5 * * * *",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "检查AG2开发任务状态：1) 检查young-river进程是否还在运行 2) 读取ag2-output.log最后50行 3) 检查outputs/ds160-helper/目录内容 4) 如果任务完成或出错，立即向用户汇报详细结果和下一步建议",
+        "timeoutSeconds": 120
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "feishu",
+        "to": "user:ou_c1435b3d813e202c2f8dda9e6cf0de25"
+      },
+      "state": {
+        "nextRunAtMs": 1775849100000,
+        "lastRunAtMs": 1775848800005,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 60128,
+        "lastDeliveryStatus": "delivered",
+        "consecutiveErrors": 0,
+        "lastDelivered": true,
+        "runningAtMs": 1775849100004
       }
     }
   ]

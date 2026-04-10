@@ -2,10 +2,10 @@
   "providers": {
     "miaoda": {
       "baseUrl": "https://innerapi.aiforce.cloud/innerapi/api/v1/sgw/model/proxy",
-      "apiKey": "secretref-managed",
+      "apiKey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiIxOTU2NjI4MzU0X2FwcF80anNlZGRwdHAxcXFmX3ByZXZpZXciLCJleHAiOjE3NzYwOTMyNzYsIm5iZiI6MTc3NTgzNDA3NiwiaWF0IjoxNzc1ODM0MDc2LCJqdGkiOiIxNWU5NDM3Ny0yOTM4LTE0MGUtNDBmMS1kZjFkNjRlNGM3NDciLCJ0ZW5hbnRfaWQiOjE5NTY2MjgzNTQsInVzZXJfaWQiOjE4NjA0MTc5MzIwMjE4MzUsImFwcF9pZCI6ImFwcF80anNlZGRwdHAxcXFmIiwiYXBwX2VudiI6InByZXZpZXciLCJhY2Nlc3Nfa2V5IjoiMTk1NjYyODM1NF9hcHBfNGpzZWRkcHRwMXFxZl9wcmV2aWV3Iiwic2FuZGJveF9pZCI6IjE4NjAzNDc2NDQ4Njk3NjgifQ.cX6XAzzgpN6yHlENbst2JsV6QC6-knzaXs7iye230-E",
       "api": "openai-completions",
       "headers": {
-        "x-api-key": "secretref-managed"
+        "x-api-key": "1956628354_app_4jseddptp1qqf_preview"
       },
       "models": [
         {
@@ -62,7 +62,7 @@
         },
         {
           "id": "glm-5",
-          "name": "GLM-5",
+          "name": "GLM-5.1",
           "api": "openai-completions",
           "reasoning": true,
           "input": [
@@ -78,8 +78,8 @@
           "maxTokens": 30000
         },
         {
-          "id": "qwen-3.5",
-          "name": "Qwen 3.5",
+          "id": "qwen-3.6-plus",
+          "name": "Qwen 3.6",
           "api": "openai-completions",
           "reasoning": true,
           "input": [
@@ -96,8 +96,8 @@
           "maxTokens": 16000
         },
         {
-          "id": "minimax-m2.5",
-          "name": "MiniMax M2.5",
+          "id": "minimax-m2.7",
+          "name": "MiniMax M2.7",
           "api": "openai-completions",
           "reasoning": false,
           "input": [
@@ -129,6 +129,30 @@
           },
           "contextWindow": 200000,
           "maxTokens": 16000
+        }
+      ]
+    },
+    "erda": {
+      "baseUrl": "https://ai-proxy.erda.cloud/v1",
+      "apiKey": "t_4e0ca0463fad462d9687ce501ee00e84",
+      "api": "openai-completions",
+      "models": [
+        {
+          "id": "anthropic/us.anthropic.claude-sonnet-4-5-20250929-v1:0",
+          "name": "anthropic/us.anthropic.claude-sonnet-4-5-20250929-v1:0",
+          "api": "openai-completions",
+          "reasoning": false,
+          "input": [
+            "text"
+          ],
+          "cost": {
+            "input": 0,
+            "output": 0,
+            "cacheRead": 0,
+            "cacheWrite": 0
+          },
+          "contextWindow": 200000,
+          "maxTokens": 8192
         }
       ]
     }

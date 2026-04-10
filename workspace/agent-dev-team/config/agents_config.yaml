@@ -1,0 +1,115 @@
+# Agent团队配置
+# 可以根据项目需求调整Agent的角色和能力
+
+agents:
+  product_manager:
+    name: "ProductManager"
+    role: "产品经理"
+    skills:
+      - 需求分析
+      - 任务拆解
+      - 项目管理
+      - 团队协调
+    output_format: markdown
+    
+  frontend_developer:
+    name: "FrontendDeveloper"
+    role: "前端开发工程师"
+    skills:
+      - React/Vue.js
+      - TypeScript
+      - Chrome Extension API
+      - UI/UX实现
+      - 前端测试
+    tech_stack:
+      - React 18+
+      - TypeScript
+      - Tailwind CSS
+      - Vite
+      - Chrome Manifest V3
+    
+  backend_developer:
+    name: "BackendDeveloper"
+    role: "后端开发工程师"
+    skills:
+      - RESTful API设计
+      - 数据库设计
+      - 认证授权
+      - 业务逻辑
+      - 性能优化
+    tech_stack:
+      - Node.js + Express
+      - PostgreSQL
+      - JWT
+      - Redis
+      
+  qa_engineer:
+    name: "QAEngineer"
+    role: "QA工程师"
+    skills:
+      - 代码审查
+      - 测试用例编写
+      - 安全审计
+      - 性能测试
+    focus_areas:
+      - 代码质量
+      - 安全漏洞
+      - 性能瓶颈
+      - 边界条件
+      
+  devops_engineer:
+    name: "DevOpsEngineer"
+    role: "DevOps工程师"
+    skills:
+      - 容器化
+      - CI/CD
+      - 云服务部署
+      - 监控告警
+    tech_stack:
+      - Docker
+      - GitHub Actions
+      - Nginx
+      - 云服务
+
+# 工作流配置
+workflow:
+  mode: "round_robin"  # round_robin | auto | manual
+  max_rounds: 50
+  timeout: 300  # 秒
+  
+  # 执行顺序
+  sequence:
+    - product_manager
+    - frontend_developer
+    - backend_developer
+    - qa_engineer
+    - devops_engineer
+
+# 模型配置
+models:
+  default:
+    provider: "anthropic"
+    model: "claude-3-5-sonnet-20241022"
+    temperature: 0.7
+    max_tokens: 4096
+    
+  # 可以为不同Agent配置不同模型
+  # product_manager:
+  #   model: "gpt-4-turbo"
+  # frontend_developer:
+  #   model: "claude-3-opus"
+
+# 输出配置
+output:
+  base_dir: "outputs"
+  subdirs:
+    code: "code"
+    docs: "docs"
+    logs: "logs"
+    
+# 安全配置
+security:
+  code_execution:
+    enabled: true
+    use_docker: false
+    work_dir: "outputs/code"
