@@ -8,7 +8,7 @@
       "name": "每日推送claudecode最热动态",
       "enabled": true,
       "createdAtMs": 1775529707153,
-      "updatedAtMs": 1775696920022,
+      "updatedAtMs": 1775784714431,
       "schedule": {
         "kind": "cron",
         "expr": "0 9 * * *",
@@ -28,14 +28,14 @@
         "channel": "feishu"
       },
       "state": {
-        "nextRunAtMs": 1775783219445,
-        "lastRunAtMs": 1775696819450,
-        "lastRunStatus": "ok",
-        "lastStatus": "ok",
-        "lastDurationMs": 100572,
-        "lastDelivered": true,
-        "lastDeliveryStatus": "delivered",
-        "consecutiveErrors": 0
+        "nextRunAtMs": 1775869619445,
+        "lastRunAtMs": 1775784414420,
+        "lastRunStatus": "error",
+        "lastStatus": "error",
+        "lastDurationMs": 300011,
+        "lastDeliveryStatus": "unknown",
+        "consecutiveErrors": 2,
+        "lastError": "Error: cron: job execution timed out"
       }
     },
     {
@@ -45,7 +45,7 @@
       "name": "每日推送cursor相关动态",
       "enabled": true,
       "createdAtMs": 1775706653599,
-      "updatedAtMs": 1775707071639,
+      "updatedAtMs": 1775783574623,
       "schedule": {
         "kind": "cron",
         "expr": "10 9 * * *",
@@ -64,14 +64,14 @@
         "channel": "feishu"
       },
       "state": {
-        "nextRunAtMs": 1775783400000,
-        "lastRunAtMs": 1775706771630,
-        "lastRunStatus": "error",
-        "lastStatus": "error",
-        "lastDurationMs": 300009,
-        "lastError": "Error: cron: job execution timed out",
-        "lastDeliveryStatus": "unknown",
-        "consecutiveErrors": 1
+        "nextRunAtMs": 1775869800000,
+        "lastRunAtMs": 1775783521487,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 53136,
+        "lastDeliveryStatus": "delivered",
+        "consecutiveErrors": 0,
+        "lastDelivered": true
       }
     }
   ]
