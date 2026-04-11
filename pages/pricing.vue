@@ -1,0 +1,256 @@
+<template>
+  <div class="bg-white">
+    <!-- Hero -->
+    <section class="py-24 bg-gradient-to-b from-gray-50 to-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-3xl mx-auto">
+          <h1 class="section-heading">Simple, Transparent Pricing</h1>
+          <p class="body-text text-xl mt-4">
+            Start for free. Upgrade when you need more.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pricing Cards -->
+    <section class="py-24">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <!-- Free Plan -->
+          <div class="card border-2 border-gray-200">
+            <div class="mb-8">
+              <h3 class="text-2xl font-bold mb-2">Free</h3>
+              <div class="flex items-baseline mb-4">
+                <span class="text-5xl font-bold">$0</span>
+                <span class="text-gray-600 ml-2">forever</span>
+              </div>
+              <p class="text-gray-600">
+                Perfect for getting started with your application
+              </p>
+            </div>
+
+            <ul class="space-y-4 mb-8">
+              <li class="flex items-start">
+                <svg class="w-6 h-6 text-green-600 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                <span class="text-gray-700">Complete 12-step form wizard</span>
+              </li>
+              <li class="flex items-start">
+                <svg class="w-6 h-6 text-green-600 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                <span class="text-gray-700">Automatic local save</span>
+              </li>
+              <li class="flex items-start">
+                <svg class="w-6 h-6 text-green-600 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                <span class="text-gray-700">High-risk field warnings</span>
+              </li>
+              <li class="flex items-start">
+                <svg class="w-6 h-6 text-green-600 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                <span class="text-gray-700">3 cloud syncs</span>
+              </li>
+              <li class="flex items-start">
+                <svg class="w-6 h-6 text-green-600 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                <span class="text-gray-700">Progress tracking</span>
+              </li>
+            </ul>
+
+            <NuxtLink to="/dashboard" class="btn-secondary w-full text-center block">
+              Get Started
+            </NuxtLink>
+          </div>
+
+          <!-- Premium Plan -->
+          <div class="card border-2 border-primary-600 relative">
+            <div class="absolute -top-4 left-1/2 -translate-x-1/2">
+              <span class="bg-primary-600 text-white px-4 py-1 rounded-full text-sm font-semibold">
+                Most Popular
+              </span>
+            </div>
+
+            <div class="mb-8">
+              <h3 class="text-2xl font-bold mb-2">Premium</h3>
+              <div class="flex items-baseline mb-4">
+                <span class="text-5xl font-bold">$19</span>
+                <span class="text-gray-600 ml-2">one-time</span>
+              </div>
+              <p class="text-gray-600">
+                Everything you need for a successful application
+              </p>
+            </div>
+
+            <ul class="space-y-4 mb-8">
+              <li class="flex items-start">
+                <svg class="w-6 h-6 text-green-600 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                <span class="text-gray-700"><strong>Everything in Free</strong></span>
+              </li>
+              <li class="flex items-start">
+                <svg class="w-6 h-6 text-green-600 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                <span class="text-gray-700">Unlimited cloud syncs</span>
+              </li>
+              <li class="flex items-start">
+                <svg class="w-6 h-6 text-green-600 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                <span class="text-gray-700">Priority support</span>
+              </li>
+              <li class="flex items-start">
+                <svg class="w-6 h-6 text-green-600 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                <span class="text-gray-700">PDF export of your application</span>
+              </li>
+              <li class="flex items-start">
+                <svg class="w-6 h-6 text-green-600 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                <span class="text-gray-700">Application checklist</span>
+              </li>
+              <li class="flex items-start">
+                <svg class="w-6 h-6 text-green-600 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                <span class="text-gray-700">Common mistakes guide</span>
+              </li>
+            </ul>
+
+            <button class="btn-primary w-full">
+              Upgrade Now
+            </button>
+          </div>
+
+          <!-- Enterprise Plan -->
+          <div class="card border-2 border-gray-200">
+            <div class="mb-8">
+              <h3 class="text-2xl font-bold mb-2">Enterprise</h3>
+              <div class="flex items-baseline mb-4">
+                <span class="text-5xl font-bold">Custom</span>
+              </div>
+              <p class="text-gray-600">
+                For organizations processing multiple applications
+              </p>
+            </div>
+
+            <ul class="space-y-4 mb-8">
+              <li class="flex items-start">
+                <svg class="w-6 h-6 text-green-600 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                <span class="text-gray-700"><strong>Everything in Premium</strong></span>
+              </li>
+              <li class="flex items-start">
+                <svg class="w-6 h-6 text-green-600 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                <span class="text-gray-700">Dedicated account manager</span>
+              </li>
+              <li class="flex items-start">
+                <svg class="w-6 h-6 text-green-600 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                <span class="text-gray-700">Bulk application management</span>
+              </li>
+              <li class="flex items-start">
+                <svg class="w-6 h-6 text-green-600 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                <span class="text-gray-700">API access</span>
+              </li>
+              <li class="flex items-start">
+                <svg class="w-6 h-6 text-green-600 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                <span class="text-gray-700">Custom integrations</span>
+              </li>
+              <li class="flex items-start">
+                <svg class="w-6 h-6 text-green-600 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                <span class="text-gray-700">SLA guarantee</span>
+              </li>
+            </ul>
+
+            <button class="btn-secondary w-full">
+              Contact Sales
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-24 bg-gray-50">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+          <h2 class="section-heading">Frequently Asked Questions</h2>
+        </div>
+
+        <div class="space-y-8">
+          <div>
+            <h3 class="text-xl font-semibold mb-2">What are cloud syncs?</h3>
+            <p class="text-gray-600">
+              Cloud syncs allow you to save your application draft to our secure servers, 
+              enabling access from multiple devices and providing an additional backup.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="text-xl font-semibold mb-2">Is my data secure?</h3>
+            <p class="text-gray-600">
+              Yes! All data is encrypted in transit and at rest. We use industry-standard 
+              security practices and never share your information with third parties.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="text-xl font-semibold mb-2">Can I switch from Free to Premium later?</h3>
+            <p class="text-gray-600">
+              Absolutely! You can upgrade at any time and all your existing data will be 
+              preserved. No need to start over.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="text-xl font-semibold mb-2">What happens after 3 free syncs?</h3>
+            <p class="text-gray-600">
+              You can still use all features with local auto-save. To sync to the cloud again, 
+              you'll need to upgrade to Premium for unlimited syncs.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="py-24">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-4xl md:text-5xl font-bold mb-6">
+          Start Your Application Today
+        </h2>
+        <p class="body-text text-xl mb-8">
+          No credit card required. Start for free and upgrade when you're ready.
+        </p>
+        <NuxtLink to="/dashboard" class="btn-primary text-lg px-8 py-4">
+          Get Started for Free
+        </NuxtLink>
+      </div>
+    </section>
+  </div>
+</template>
+
+<script setup lang="ts">
+definePageMeta({
+  layout: 'default'
+})
+</script>
