@@ -2,7 +2,7 @@
   "providers": {
     "miaoda": {
       "baseUrl": "https://innerapi.aiforce.cloud/innerapi/api/v1/sgw/model/proxy",
-      "apiKey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiIxOTU2NjI4MzU0X2FwcF80anNlZGRwdHAxcXFmX3ByZXZpZXciLCJleHAiOjE3NzYwOTMyNzYsIm5iZiI6MTc3NTgzNDA3NiwiaWF0IjoxNzc1ODM0MDc2LCJqdGkiOiIxNWU5NDM3Ny0yOTM4LTE0MGUtNDBmMS1kZjFkNjRlNGM3NDciLCJ0ZW5hbnRfaWQiOjE5NTY2MjgzNTQsInVzZXJfaWQiOjE4NjA0MTc5MzIwMjE4MzUsImFwcF9pZCI6ImFwcF80anNlZGRwdHAxcXFmIiwiYXBwX2VudiI6InByZXZpZXciLCJhY2Nlc3Nfa2V5IjoiMTk1NjYyODM1NF9hcHBfNGpzZWRkcHRwMXFxZl9wcmV2aWV3Iiwic2FuZGJveF9pZCI6IjE4NjAzNDc2NDQ4Njk3NjgifQ.cX6XAzzgpN6yHlENbst2JsV6QC6-knzaXs7iye230-E",
+      "apiKey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiIxOTU2NjI4MzU0X2FwcF80anNlZGRwdHAxcXFmX3ByZXZpZXciLCJleHAiOjE3NzYxMjMyMjcsIm5iZiI6MTc3NTg2NDAyNywiaWF0IjoxNzc1ODY0MDI3LCJqdGkiOiI2NDUzNzdhNy01ZjNjLTA4YzItMWYwNS01ZmY3ZDY3YTgwODciLCJ0ZW5hbnRfaWQiOjE5NTY2MjgzNTQsInVzZXJfaWQiOjE4NjA0MTc5MzIwMjE4MzUsImFwcF9pZCI6ImFwcF80anNlZGRwdHAxcXFmIiwiYXBwX2VudiI6InByZXZpZXciLCJhY2Nlc3Nfa2V5IjoiMTk1NjYyODM1NF9hcHBfNGpzZWRkcHRwMXFxZl9wcmV2aWV3Iiwic2FuZGJveF9pZCI6IjE4NjAzNDc2NDQ4Njk3NjgifQ.XJ-UyA2zTjIf-wNFtIa-QCa_5ZnYqgpNLSyPArukPm8",
       "api": "openai-completions",
       "headers": {
         "x-api-key": "1956628354_app_4jseddptp1qqf_preview"

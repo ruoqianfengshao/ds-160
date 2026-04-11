@@ -111,7 +111,7 @@
       "name": "AG2开发任务监控",
       "enabled": true,
       "createdAtMs": 1775840041454,
-      "updatedAtMs": 1775848860133,
+      "updatedAtMs": 1775865969014,
       "schedule": {
         "kind": "cron",
         "expr": "*/5 * * * *",
@@ -130,15 +130,15 @@
         "to": "user:ou_c1435b3d813e202c2f8dda9e6cf0de25"
       },
       "state": {
-        "nextRunAtMs": 1775849100000,
-        "lastRunAtMs": 1775848800005,
+        "nextRunAtMs": 1775866200000,
+        "lastRunAtMs": 1775865900004,
         "lastRunStatus": "ok",
         "lastStatus": "ok",
-        "lastDurationMs": 60128,
+        "lastDurationMs": 69010,
         "lastDeliveryStatus": "delivered",
         "consecutiveErrors": 0,
         "lastDelivered": true,
-        "runningAtMs": 1775849100004
+        "runningAtMs": 1775866200005
       }
     }
   ]
