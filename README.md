@@ -1,155 +1,177 @@
 # DS-160 Helper - Visa Application Assistant
 
-A modern web application built with Nuxt 3 to help users complete their DS-160 visa application forms with confidence.
+A modern, user-friendly web application to help you complete your DS-160 visa application form with confidence. Built with Nuxt 3, Vue 3, TypeScript, and Supabase.
 
-## Features
+## ✨ Features
 
-- **12-Step Guided Process**: Break down the complex form into manageable steps
-- **Apple-Inspired Design**: Clean, minimal interface with focus on usability
-- **Auto-Save**: Progress automatically saved to browser localStorage
-- **High-Risk Field Warnings**: Critical fields highlighted with helpful tips
-- **Cloud Sync**: 3 free cloud syncs to access your draft from multiple devices
-- **Responsive Design**: Works seamlessly on desktop, tablet, and mobile
-- **Progress Tracking**: Real-time completion percentage
-- **Draft Management**: Export/import your application data
+- 📝 **Step-by-step guided form** - Break down the complex DS-160 into manageable steps
+- 💾 **Auto-save & Cloud Sync** - Never lose your progress with automatic local and cloud backups
+- 🔐 **User Authentication** - Secure sign-up and login with email/password
+- 📊 **Multi-Draft Support** - Manage multiple applications simultaneously
+- 🚫 **Offline Support** - Continue working even without internet connection
+- ⚠️ **Smart Validation** - Catch common mistakes before submission
+- 🔔 **High-Risk Field Alerts** - Special warnings for critical fields
+- 📱 **Responsive Design** - Works perfectly on desktop, tablet, and mobile
+- 🎨 **Modern UI** - Clean, intuitive interface with Tailwind CSS
+- 🌐 **Free Tier** - 3 cloud syncs per month (auto-resets monthly)
 
-## Tech Stack
+## 🚀 Quick Start
 
-- **Nuxt 3** - Vue 3 framework
-- **Vue 3** - Composition API with TypeScript
-- **Pinia** - State management
-- **Tailwind CSS** - Utility-first styling
-- **TypeScript** - Type safety
+```bash
+# Install dependencies
+npm install
 
-## Project Structure
+# Set up environment variables
+cp .env.example .env
+# Edit .env with your Supabase credentials
+
+# Run development server
+npm run dev
+```
+
+Visit http://localhost:3000
+
+**First time setup?** Follow the [Quick Start Guide](QUICKSTART.md) or [Supabase Setup Guide](supabase/SETUP.md).
+
+## 📦 Tech Stack
+
+- **Framework**: [Nuxt 3](https://nuxt.com/)
+- **UI**: [Vue 3](https://vuejs.org/) + [TypeScript](https://www.typescriptlang.org/)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+- **State Management**: [Pinia](https://pinia.vuejs.org/)
+- **Database**: [Supabase](https://supabase.com/) (PostgreSQL)
+- **Authentication**: Supabase Auth (JWT)
+- **Storage**: LocalStorage + Supabase Cloud
+
+## 📖 Documentation
+
+- **[Quick Start Guide](QUICKSTART.md)** - Get up and running in 5 minutes
+- **[Implementation Guide](IMPLEMENTATION_COMPLETE.md)** - Complete feature documentation
+- **[Supabase Setup](supabase/SETUP.md)** - Database setup instructions
+- **[Database Schema](supabase/schema.sql)** - SQL migration file
+
+## 🎯 Project Structure
 
 ```
 ds160-helper/
-├── assets/
-│   └── css/
-│       └── main.css           # Global styles and Tailwind directives
-├── components/
-│   └── form/
-│       ├── FormInput.vue      # Input component with high-risk alerts
-│       ├── FormCheckbox.vue   # Checkbox component
-│       ├── FormSelect.vue     # Select dropdown component
-│       └── FormNavigation.vue # Step navigation with progress bar
-├── layouts/
-│   └── default.vue            # Main layout with header/footer
-├── pages/
-│   ├── index.vue              # Marketing homepage
-│   ├── features.vue           # Features page
-│   ├── pricing.vue            # Pricing page
-│   ├── dashboard.vue          # Application dashboard
-│   └── form/
-│       ├── step-1.vue         # Personal Information
-│       ├── step-2.vue         # Contact Information
-│       ├── step-3.vue         # Passport Information
-│       ├── step-4.vue         # Travel Information
-│       └── step-[5-12].vue    # Additional steps
-├── stores/
-│   └── ds160.ts               # Pinia store with auto-save logic
-├── types/
-│   └── index.ts               # TypeScript type definitions
-├── reference/
-│   └── design/
-│       └── 001-reference.md   # Apple design system guidelines
-├── nuxt.config.ts             # Nuxt configuration
-├── tailwind.config.js         # Tailwind configuration
-└── package.json               # Dependencies
-
+├── pages/              # Route pages
+│   ├── auth/          # Login & signup pages
+│   ├── dashboard.vue  # Main dashboard
+│   ├── profile.vue    # User profile
+│   └── form/          # 12-step form pages
+├── stores/            # Pinia stores
+│   ├── auth.ts       # Authentication state
+│   └── ds160.ts      # Form data & sync logic
+├── components/        # Reusable Vue components
+├── plugins/          # Nuxt plugins
+├── middleware/       # Route guards
+├── supabase/         # Database migration & docs
+└── types/            # TypeScript type definitions
 ```
 
-## Setup
+## 🔐 Authentication & Security
 
-1. **Install dependencies:**
-   ```bash
-   npm install
-   ```
+- **Row Level Security (RLS)** - Users can only access their own data
+- **JWT Tokens** - Secure session management
+- **Password Validation** - Minimum 8 characters
+- **Environment Variables** - Sensitive data kept out of codebase
+- **HTTPS Only** - Secure data transmission (in production)
 
-2. **Run development server:**
-   ```bash
-   npm run dev
-   ```
+## 💾 Data Sync Strategy
 
-3. **Build for production:**
-   ```bash
-   npm run build
-   npm run preview
-   ```
+### Offline-First Architecture
+```
+User Input → localStorage (instant) → Debounce 2s → Supabase (background)
+```
 
-## Design System
+### Features
+- ✅ Instant save to localStorage
+- ✅ Auto-sync to cloud after 2 seconds
+- ✅ Manual sync option
+- ✅ Offline capability
+- ✅ Conflict resolution (server wins)
+- ✅ Sync quota management
 
-Following Apple's design principles:
+## 🗄️ Database Schema
 
-- **Typography**: Inter font family, 48px+ hero headlines
-- **Colors**: Primary blue, warning orange, neutral grays
-- **Spacing**: 8pt grid system
-- **Borders**: 1px subtle borders, 6-12px border radius
-- **Animations**: Smooth 200ms transitions
+### Tables
+- **profiles** - User profiles and subscription plans
+- **ds160_drafts** - Form drafts with JSONB storage
+- **sync_history** - Audit log for all sync operations
 
-## Key Features Implemented
+### Key Features
+- Row Level Security (RLS) on all tables
+- Auto-incrementing sync quota
+- Monthly quota reset
+- JSONB for flexible form data storage
 
-### Auto-Save System
-- Automatically saves form data to localStorage after every change
-- Debounced to prevent excessive writes
-- Preserves data across browser sessions
+## 🎨 UI/UX Features
 
-### High-Risk Field System
-- Pre-defined list of critical fields that need special attention
-- Orange border and warning icon for high-risk fields
-- Contextual tips and best practices displayed inline
+- Clean, modern design with gradient backgrounds
+- Progress tracking across all steps
+- Real-time validation
+- Loading states and error messages
+- Responsive navigation
+- Modal confirmations for destructive actions
+- Draft management interface
+- Sync status indicators
 
-### Cloud Sync (Simulated)
-- Free users get 3 cloud syncs
-- Tracks sync count and status (local/syncing/synced/error)
-- Can be upgraded to unlimited in premium tier
+## 🧪 Development
 
-### Progressive Form
-- 12 steps matching official DS-160 structure
-- Progress tracking with completion percentage
-- Step validation and navigation
-- Can jump to any step from dashboard
+```bash
+# Install dependencies
+npm install
 
-### Dashboard
-- Overview of draft status
-- Progress visualization
-- Sync status indicator
-- Export/import functionality
-- Quick access to all form steps
+# Run development server
+npm run dev
 
-## State Management
+# Build for production
+npm run build
 
-Pinia store (`stores/ds160.ts`) manages:
-- Form data for all 12 steps
-- Draft metadata (ID, timestamps, progress)
-- Auto-save logic
-- Sync operations
-- High-risk field definitions
+# Preview production build
+npm run preview
 
-## Responsive Design
+# Generate static site
+npm generate
+```
 
-- Mobile-first approach
-- Breakpoints: sm (640px), md (768px), lg (1024px)
-- Hamburger menu on mobile
-- Touch-friendly form controls
-- Optimized layouts for all screen sizes
+## 🚀 Deployment
 
-## Future Enhancements
+### Vercel (Recommended)
+1. Push to GitHub
+2. Import to Vercel
+3. Add environment variables
+4. Deploy!
 
-- [ ] Real cloud sync API integration
-- [ ] PDF export functionality
-- [ ] Application checklist
-- [ ] Common mistakes guide
-- [ ] Multi-language support
-- [ ] Document upload for passport photo
-- [ ] Email notifications
-- [ ] Payment integration for premium features
+### Environment Variables
+```env
+SUPABASE_URL=https://your-project.supabase.co
+SUPABASE_KEY=your-anon-key
+SUPABASE_SERVICE_KEY=your-service-role-key
+```
 
-## License
+## 📝 License
 
-MIT
+MIT License - feel free to use this project for your own applications!
 
-## Support
+## 🙏 Acknowledgments
 
-For questions or issues, please contact support or visit our help center.
+- Built with [Nuxt 3](https://nuxt.com/)
+- Powered by [Supabase](https://supabase.com/)
+- Styled with [Tailwind CSS](https://tailwindcss.com/)
+- Icons from [Heroicons](https://heroicons.com/)
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## 📧 Support
+
+Having issues? Check out:
+- [Quick Start Guide](QUICKSTART.md)
+- [Troubleshooting Section](QUICKSTART.md#troubleshooting)
+- [Implementation Guide](IMPLEMENTATION_COMPLETE.md)
+
+---
+
+**Note**: This is a helper tool for filling out the DS-160 form. Always verify your information on the official U.S. Department of State website before submission.

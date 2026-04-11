@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import type { DS160FormData, DraftMeta, HighRiskField } from '~/types'
+import { useAuthStore } from './auth'
 
 const STORAGE_KEY = 'ds160-form-data'
 const META_STORAGE_KEY = 'ds160-form-meta'
@@ -33,6 +34,9 @@ const HIGH_RISK_FIELDS: HighRiskField[] = [
     tips: ['Include all arrests even if dismissed', 'Provide complete details', 'Attach supporting documents']
   },
 ]
+
+// Debounce helper
+let syncDebounceTimer: NodeJS.Timeout | null = null
 
 export const useDS160Store = defineStore('ds160', {
   state: () => ({
@@ -154,12 +158,20 @@ export const useDS160Store = defineStore('ds160', {
 
     autoSaveEnabled: true,
     lastSaveTime: null as Date | null,
+    isSyncing: false,
+    allDrafts: [] as any[], // For dashboard
   }),
 
   getters: {
-    canSync: (state) => state.meta.syncCount < MAX_FREE_SYNCS,
+    canSync: (state) => {
+      const authStore = useAuthStore()
+      return authStore.isAuthenticated && authStore.canSync
+    },
     
-    remainingSyncs: (state) => Math.max(0, MAX_FREE_SYNCS - state.meta.syncCount),
+    remainingSyncs: () => {
+      const authStore = useAuthStore()
+      return authStore.remainingSyncs
+    },
     
     isHighRiskField: () => (fieldPath: string): HighRiskField | undefined => {
       return HIGH_RISK_FIELDS.find(f => f.field === fieldPath)
@@ -209,6 +221,19 @@ export const useDS160Store = defineStore('ds160', {
   },
 
   actions: {
+    // Initialize from localStorage or database
+    async initialize() {
+      const authStore = useAuthStore()
+      
+      if (authStore.isAuthenticated) {
+        // Load from database
+        await this.loadCurrentDraft()
+      } else {
+        // Load from localStorage
+        this.initializeFromStorage()
+      }
+    },
+
     // Initialize from localStorage
     initializeFromStorage() {
       if (process.client) {
@@ -244,6 +269,158 @@ export const useDS160Store = defineStore('ds160', {
       }
     },
 
+    // Load current draft from database
+    async loadCurrentDraft() {
+      const { $supabase } = useNuxtApp()
+      const authStore = useAuthStore()
+      
+      if (!$supabase || !authStore.user) return
+
+      try {
+        const { data, error } = await $supabase
+          .from('ds160_drafts')
+          .select('*')
+          .eq('user_id', authStore.user.id)
+          .eq('status', 'draft')
+          .order('updated_at', { ascending: false })
+          .limit(1)
+          .single()
+
+        if (error && error.code !== 'PGRST116') { // PGRST116 = no rows
+          throw error
+        }
+
+        if (data) {
+          // Load from database
+          this.formData = data.form_data
+          this.meta = {
+            id: data.id,
+            createdAt: data.created_at,
+            updatedAt: data.updated_at,
+            currentStep: data.current_step,
+            completionPercentage: data.completion_percentage,
+            syncStatus: 'synced',
+            syncCount: authStore.profile?.sync_count || 0,
+            lastSyncAt: data.last_synced_at,
+          }
+          
+          // Also save to localStorage for offline access
+          this.saveToLocalStorage()
+        } else {
+          // No draft in database, try localStorage
+          this.initializeFromStorage()
+          
+          // If has data, sync to database
+          if (this.meta.id) {
+            await this.syncToCloud()
+          }
+        }
+      } catch (error) {
+        console.error('Failed to load draft from database:', error)
+        // Fallback to localStorage
+        this.initializeFromStorage()
+      }
+    },
+
+    // Load all drafts for dashboard
+    async loadAllDrafts() {
+      const { $supabase } = useNuxtApp()
+      const authStore = useAuthStore()
+      
+      if (!$supabase || !authStore.user) return
+
+      try {
+        const { data, error } = await $supabase
+          .from('ds160_drafts')
+          .select('*')
+          .eq('user_id', authStore.user.id)
+          .order('updated_at', { ascending: false })
+
+        if (error) throw error
+
+        this.allDrafts = data || []
+      } catch (error) {
+        console.error('Failed to load drafts:', error)
+      }
+    },
+
+    // Load specific draft
+    async loadDraft(draftId: string) {
+      const { $supabase } = useNuxtApp()
+      const authStore = useAuthStore()
+      
+      if (!$supabase || !authStore.user) return
+
+      try {
+        const { data, error } = await $supabase
+          .from('ds160_drafts')
+          .select('*')
+          .eq('id', draftId)
+          .eq('user_id', authStore.user.id)
+          .single()
+
+        if (error) throw error
+
+        if (data) {
+          this.formData = data.form_data
+          this.meta = {
+            id: data.id,
+            createdAt: data.created_at,
+            updatedAt: data.updated_at,
+            currentStep: data.current_step,
+            completionPercentage: data.completion_percentage,
+            syncStatus: 'synced',
+            syncCount: authStore.profile?.sync_count || 0,
+            lastSyncAt: data.last_synced_at,
+          }
+          
+          this.saveToLocalStorage()
+        }
+      } catch (error) {
+        console.error('Failed to load draft:', error)
+        throw error
+      }
+    },
+
+    // Create new draft
+    async createNewDraft(title: string = 'DS-160 Draft') {
+      const { $supabase } = useNuxtApp()
+      const authStore = useAuthStore()
+      
+      if (!$supabase || !authStore.user) return
+
+      try {
+        const { data, error } = await $supabase
+          .from('ds160_drafts')
+          .insert({
+            user_id: authStore.user.id,
+            title,
+            form_data: this.formData,
+            current_step: 1,
+            completion_percentage: 0,
+            status: 'draft',
+          })
+          .select()
+          .single()
+
+        if (error) throw error
+
+        if (data) {
+          this.meta.id = data.id
+          this.meta.createdAt = data.created_at
+          this.meta.updatedAt = data.updated_at
+          this.meta.syncStatus = 'synced'
+          
+          this.saveToLocalStorage()
+        }
+
+        return data
+      } catch (error) {
+        console.error('Failed to create draft:', error)
+        throw error
+      }
+    },
+
     // Update form data for a specific step
     updateStepData(step: number, data: any) {
       const stepMap: Record<number, keyof DS160FormData> = {
@@ -265,6 +442,7 @@ export const useDS160Store = defineStore('ds160', {
       if (key) {
         this.formData[key] = { ...this.formData[key], ...data }
         this.autoSave()
+        this.debouncedSyncToCloud()
       }
     },
 
@@ -273,6 +451,19 @@ export const useDS160Store = defineStore('ds160', {
       if (step >= 1 && step <= 12) {
         this.meta.currentStep = step
         this.autoSave()
+        this.debouncedSyncToCloud()
+      }
+    },
+
+    // Save to localStorage
+    saveToLocalStorage() {
+      if (!process.client) return
+
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(this.formData))
+        localStorage.setItem(META_STORAGE_KEY, JSON.stringify(this.meta))
+      } catch (error) {
+        console.error('Failed to save to localStorage:', error)
       }
     },
 
@@ -284,34 +475,141 @@ export const useDS160Store = defineStore('ds160', {
       this.meta.completionPercentage = this.progress
       this.lastSaveTime = new Date()
 
-      try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(this.formData))
-        localStorage.setItem(META_STORAGE_KEY, JSON.stringify(this.meta))
-      } catch (error) {
-        console.error('Failed to auto-save:', error)
-      }
+      this.saveToLocalStorage()
     },
 
-    // Sync to cloud (simulated)
-    async syncToCloud() {
-      if (!this.canSync) {
+    // Debounced sync to cloud (2 seconds)
+    debouncedSyncToCloud() {
+      const authStore = useAuthStore()
+      
+      if (!authStore.isAuthenticated) return
+
+      if (syncDebounceTimer) {
+        clearTimeout(syncDebounceTimer)
+      }
+
+      syncDebounceTimer = setTimeout(() => {
+        this.syncToCloud()
+      }, 2000)
+    },
+
+    // Sync to cloud
+    async syncToCloud(force: boolean = false) {
+      const { $supabase } = useNuxtApp()
+      const authStore = useAuthStore()
+      
+      if (!$supabase || !authStore.user) {
+        console.log('Not authenticated, skipping sync')
+        return
+      }
+
+      // Don't sync if already syncing
+      if (this.isSyncing) return
+
+      // Check if need to count against quota
+      const shouldCount = force || !this.meta.lastSyncAt || 
+        (Date.now() - new Date(this.meta.lastSyncAt).getTime() > 60000) // 1 minute
+
+      if (shouldCount && !authStore.canSync && !authStore.isPremium) {
         throw new Error('Sync limit reached. Please upgrade to premium.')
       }
 
+      this.isSyncing = true
       this.meta.syncStatus = 'syncing'
-      
+
       try {
-        // Simulate API call
-        await new Promise(resolve => setTimeout(resolve, 1500))
-        
-        this.meta.syncCount++
-        this.meta.syncStatus = 'synced'
-        this.meta.lastSyncAt = new Date().toISOString()
-        this.autoSave()
-        
+        // Update or insert draft
+        const draftData = {
+          user_id: authStore.user.id,
+          form_data: this.formData,
+          current_step: this.meta.currentStep,
+          completion_percentage: this.progress,
+          status: 'draft',
+          last_synced_at: new Date().toISOString(),
+        }
+
+        let result
+        if (this.meta.id && !this.meta.id.startsWith('draft-')) {
+          // Update existing
+          result = await $supabase
+            .from('ds160_drafts')
+            .update(draftData)
+            .eq('id', this.meta.id)
+            .select()
+            .single()
+        } else {
+          // Insert new
+          result = await $supabase
+            .from('ds160_drafts')
+            .insert(draftData)
+            .select()
+            .single()
+        }
+
+        const { data, error } = result
+
+        if (error) throw error
+
+        if (data) {
+          this.meta.id = data.id
+          this.meta.updatedAt = data.updated_at
+          this.meta.lastSyncAt = data.last_synced_at
+          this.meta.syncStatus = 'synced'
+          
+          // Increment sync count if needed
+          if (shouldCount && !authStore.isPremium) {
+            await authStore.incrementSyncCount()
+          }
+
+          // Log sync history
+          await $supabase.from('sync_history').insert({
+            user_id: authStore.user.id,
+            draft_id: data.id,
+            action: 'sync',
+          })
+
+          this.saveToLocalStorage()
+        }
+
         return { success: true, message: 'Synced successfully' }
-      } catch (error) {
+      } catch (error: any) {
+        console.error('Sync failed:', error)
         this.meta.syncStatus = 'error'
+        throw error
+      } finally {
+        this.isSyncing = false
+      }
+    },
+
+    // Delete draft
+    async deleteDraft(draftId: string) {
+      const { $supabase } = useNuxtApp()
+      const authStore = useAuthStore()
+      
+      if (!$supabase || !authStore.user) return
+
+      try {
+        const { error } = await $supabase
+          .from('ds160_drafts')
+          .delete()
+          .eq('id', draftId)
+          .eq('user_id', authStore.user.id)
+
+        if (error) throw error
+
+        // Log deletion
+        await $supabase.from('sync_history').insert({
+          user_id: authStore.user.id,
+          draft_id: draftId,
+          action: 'delete',
+        })
+
+        // Reload drafts
+        await this.loadAllDrafts()
+
+        return { success: true }
+      } catch (error) {
+        console.error('Failed to delete draft:', error)
         throw error
       }
     },
@@ -346,6 +644,7 @@ export const useDS160Store = defineStore('ds160', {
         this.meta = { ...data.meta, syncStatus: 'local' as const }
       }
       this.autoSave()
+      this.debouncedSyncToCloud()
     },
   },
 })

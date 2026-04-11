@@ -5,6 +5,10 @@ node_modules
 .cache
 .output
 .env
+.env.*
+!.env.example
+.env.local
+.env.production
 dist
 .DS_Store
 .vscode
@@ -14,3 +18,4 @@ dist
 *.njsproj
 *.sln
 *.sw?
+.supabase

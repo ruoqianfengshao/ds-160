@@ -11,6 +11,10 @@
   },
   "dependencies": {
     "@pinia/nuxt": "^0.5.1",
+    "@supabase/supabase-js": "^2.103.0",
+    "@vercel/postgres": "^0.10.0",
+    "bcrypt": "^6.0.0",
+    "jsonwebtoken": "^9.0.3",
     "nuxt": "^3.11.2",
     "pinia": "^2.1.7",
     "vue": "^3.4.21",
