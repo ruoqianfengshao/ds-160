@@ -38,10 +38,10 @@
               <li>✓ Free: 3 syncs per month</li>
             </ul>
             <div class="flex gap-3">
-              <NuxtLink to="/auth/signup" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+              <NuxtLink to="/signup" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
                 Create Free Account
               </NuxtLink>
-              <NuxtLink to="/auth/login" class="px-4 py-2 bg-white text-blue-600 border border-blue-300 rounded-lg hover:bg-blue-50 transition">
+              <NuxtLink to="/login" class="px-4 py-2 bg-white text-blue-600 border border-blue-300 rounded-lg hover:bg-blue-50 transition">
                 Sign In
               </NuxtLink>
             </div>

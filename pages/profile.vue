@@ -22,7 +22,7 @@
             </div>
             <NuxtLink
               v-else
-              to="/auth/login"
+              to="/login"
               class="px-4 py-2 text-sm text-gray-700 hover:text-gray-900"
             >
               Sign In
@@ -356,7 +356,7 @@ const handleSignOut = async () => {
 onMounted(async () => {
   // Redirect if not authenticated
   if (!authStore.isAuthenticated) {
-    router.push('/auth/login')
+    router.push('/login')
     return
   }
 
