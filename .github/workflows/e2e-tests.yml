@@ -30,11 +30,10 @@ jobs:
       - name: Build application
         run: npm run build
 
-      - name: Start server
-        run: npm run start &
+      - name: Start preview server
+        run: npm run preview -- --port 3000 &
         env:
           NODE_ENV: production
-          PORT: 3000
 
       - name: Wait for server
         run: npx wait-on http://localhost:3000 -t 30000
