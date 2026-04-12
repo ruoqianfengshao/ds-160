@@ -1,172 +1,107 @@
-# ✅ Vercel Postgres 部署检查清单
+# DS-160 Helper - 部署状态
 
-## 📋 部署步骤（必须按顺序完成）
+## ✅ 部署完成（2026-04-12 15:25）
 
-### 1. ✅ 代码已推送到 GitHub
-- [x] 提交记录：`019d2874 feat: integrate Vercel Postgres authentication and database`
-- [x] 仓库地址：https://github.com/ruoqianfengshao/ds-160
+### 已完成的配置
 
-### 2. ⏳ 等待 Vercel 自动部署
-Vercel 会检测到新提交并自动重新部署（约 2-3 分钟）
+#### 1. ✅ GitHub 仓库
+- **仓库地址**: https://github.com/ruoqianfengshao/ds-160
+- **分支**: main
+- **最新提交**: 0249a580 (数据库设置后触发重新部署)
 
-### 3. 🗄️ 创建 Vercel Postgres 数据库
+#### 2. ✅ Vercel 项目
+- **项目名称**: ds-160
+- **生产环境 URL**: https://ds-160-ten.vercel.app
+- **最新部署**: https://ds-160-jq2e8z4o5-ruoqianfengshaos-projects.vercel.app
+- **部署状态**: ● Ready (26秒完成)
+- **部署时间**: 2026-04-12 15:23
 
-**在 Vercel Dashboard 操作：**
+#### 3. ✅ Vercel Postgres 数据库
+- **数据库名称**: ds-160-db
+- **区域**: US East (iad1)
+- **表结构已初始化**:
+  - ✅ `users` - 用户表
+  - ✅ `profiles` - 用户档案
+  - ✅ `ds160_drafts` - DS-160 草稿表
+  - ✅ `sync_history` - 同步历史记录
+  - ✅ 索引和触发器已创建
 
-1. 访问 https://vercel.com/dashboard
-2. 进入你的项目 `ds-160`
-3. 点击 **Storage** 标签
-4. 点击 **Create Database**
-5. 选择 **Postgres**
-6. 区域选择：**US East (iad1)** 或离你最近的区域
-7. 点击 **Create**
-8. 等待数据库创建完成（约 30 秒）
+#### 4. ✅ 环境变量配置
+- ✅ `POSTGRES_URL` (自动配置)
+- ✅ `DATABASE_URL` (自动配置)
+- ✅ `JWT_SECRET` (production & development)
+  - 值: `uIDF8mHAWe0AtNtcBMw8O/3i5Zp6CbWqnkYL75B8yBQ=`
 
-✅ **数据库创建后，环境变量会自动注入！**
+---
 
-### 4. 📝 运行数据库迁移
+## 🎯 下一步：测试应用
 
-**方式 A：Vercel Dashboard（推荐）**
+### 1. 注册测试账号
+访问 https://ds-160-ten.vercel.app/signup
 
-1. Storage → Postgres → 你的数据库
-2. 点击 **Query** 标签
-3. 打开项目中的 `vercel-postgres-schema.sql`
-4. 复制全部内容（77 行 SQL）
-5. 粘贴到 Query 编辑器
-6. 点击 **Run** 或按 `Cmd/Ctrl + Enter`
-7. 确认看到成功消息
+**测试流程**:
+1. 输入邮箱和密码注册
+2. 应该自动跳转到 Dashboard
+3. 点击 "Create New Draft" 创建草稿
+4. 填写表单数据并保存
+5. 刷新页面验证数据持久化
 
-**方式 B：本地命令行**
+### 2. 验证数据库连接
+在浏览器开发者工具检查：
+- Network 标签：API 请求是否成功 (200 状态码)
+- Console：是否有数据库连接错误
 
+### 3. 如果遇到问题
+查看 Vercel 部署日志：
 ```bash
-# 拉取环境变量
-vercel env pull .env.local
-
-# 运行迁移
-psql $POSTGRES_URL < vercel-postgres-schema.sql
+cd ~/workspace/agent/workspace/ds160-helper
+vercel logs https://ds-160-jq2e8z4o5-ruoqianfengshaos-projects.vercel.app
 ```
 
-### 5. 🔐 配置 JWT Secret
+---
 
-**生成 Secret：**
+## 📝 数据库查询（可选）
 
+连接到 Postgres 查看数据：
 ```bash
-openssl rand -base64 32
-# 输出示例: kX7j9mP4nQ8rY2sZ5vW6tU3lH1dF0cB9aE8gK4jM6nL2=
+cd ~/workspace/agent/workspace/ds160-helper
+node -e "
+import('postgres').then(async ({ default: postgres }) => {
+  const sql = postgres(process.env.POSTGRES_URL);
+  const users = await sql\`SELECT * FROM users\`;
+  console.log('Users:', users);
+  await sql.end();
+});
+"
 ```
 
-**添加到 Vercel：**
+---
 
-1. 项目设置 → **Environment Variables**
-2. 点击 **Add New**
-3. **Name**: `JWT_SECRET`
-4. **Value**: 粘贴刚才生成的字符串
-5. **Environment**: 勾选 `Production`, `Preview`, `Development`
-6. 点击 **Save**
+## 🔧 常见问题
 
-### 6. 🔄 触发重新部署
-
-**方式 A：在 Vercel Dashboard**
-1. Deployments 标签
-2. 点击最新的部署
-3. 点击 **Redeploy**
-
-**方式 B：推送任意修改**
+### Preview 环境的 JWT_SECRET
+如果需要为 Preview 分支单独配置：
 ```bash
-git commit --allow-empty -m "chore: trigger redeploy"
-git push origin main
+echo "uIDF8mHAWe0AtNtcBMw8O/3i5Zp6CbWqnkYL75B8yBQ=" > /tmp/jwt.txt
+vercel env add JWT_SECRET preview < /tmp/jwt.txt
+# 提示 Git branch 时直接回车（应用到所有 Preview 分支）
 ```
 
-### 7. ✅ 验证部署
-
-**访问你的应用：**
-- 主域名：https://ds-160-ten.vercel.app
-
-**测试功能：**
-
-1. **注册页面**
-   - 访问 https://ds-160-ten.vercel.app/signup
-   - 输入邮箱、密码
-   - 点击 Sign up
-   - 应该自动跳转到 Dashboard
-
-2. **登录页面**
-   - 访问 https://ds-160-ten.vercel.app/login
-   - 使用刚才注册的账号登录
-   - 应该自动跳转到 Dashboard
-
-3. **Dashboard**
-   - 查看是否能创建新草稿
-   - 填写表单并保存
-   - 刷新页面查看数据是否持久化
-
-### 8. 🐛 故障排查
-
-**如果遇到问题：**
-
-1. **检查环境变量**
-   - Settings → Environment Variables
-   - 确保有 `POSTGRES_URL` 等数据库变量（自动注入）
-   - 确保有 `JWT_SECRET`（手动添加）
-
-2. **查看日志**
-   - Deployments → 最新部署 → **Runtime Logs**
-   - 查看是否有错误信息
-
-3. **常见错误及解决方案**
-
-   | 错误 | 原因 | 解决方案 |
-   |------|------|----------|
-   | `JWT_SECRET is not defined` | 未配置环境变量 | 添加 JWT_SECRET 并重新部署 |
-   | `relation "users" does not exist` | 未运行数据库迁移 | 在 Vercel Storage Query 中运行 SQL |
-   | `Cannot connect to database` | 数据库未创建 | 在 Storage 标签创建 Postgres 数据库 |
-   | `401 Unauthorized` | Cookie 未设置 | 检查浏览器 DevTools → Application → Cookies |
+### 重新初始化数据库
+如果需要清空数据库重新开始：
+```bash
+cd ~/workspace/agent/workspace/ds160-helper
+node init-db.mjs
+```
 
 ---
 
-## 📊 部署后的功能
+## 🎉 恭喜！
 
-### ✅ 用户认证
-- [x] 邮箱 + 密码注册
-- [x] 登录/登出
-- [x] JWT token 会话管理
-- [x] Cookie-based 认证
+你的 DS-160 Helper 应用已经：
+- ✅ 部署到 Vercel 生产环境
+- ✅ 连接到 Postgres 数据库
+- ✅ 配置了 JWT 认证
+- ✅ 代码自动部署已启用
 
-### ✅ 数据持久化
-- [x] 草稿自动保存到数据库
-- [x] 支持多个草稿
-- [x] Dashboard 草稿列表
-- [x] 草稿 CRUD 操作
-
-### ✅ 同步系统
-- [x] localStorage 离线缓存
-- [x] 自动云同步（2秒防抖）
-- [x] 同步历史记录
-
----
-
-## 🎯 预期结果
-
-完成所有步骤后，你应该能够：
-
-1. ✅ 在 https://ds-160-ten.vercel.app 访问应用
-2. ✅ 注册新账号
-3. ✅ 登录并创建草稿
-4. ✅ 填写 DS-160 表单
-5. ✅ 数据自动保存到 Vercel Postgres
-6. ✅ 刷新页面后数据仍然存在
-7. ✅ 在 Dashboard 看到所有草稿
-
----
-
-## 📚 下一步
-
-- [ ] 添加 Google OAuth 登录
-- [ ] 实现密码重置功能
-- [ ] 添加用户资料页
-- [ ] 实现套餐升级
-- [ ] 添加 PDF 导出功能
-
----
-
-**需要帮助？** 查看 `VERCEL_POSTGRES_SETUP.md` 获取详细文档。
+现在可以开始使用了！🦞
