@@ -7,32 +7,32 @@ test.describe('Authentication', () => {
     // 检查页面标题
     await expect(page).toHaveTitle(/DS-160/)
     
-    // 检查登录表单元素（根据实际代码）
-    await expect(page.getByRole('heading', { name: /Sign in to DS-160 Helper/i })).toBeVisible()
-    await expect(page.getByPlaceholder('Email address')).toBeVisible()
-    await expect(page.getByPlaceholder('Password')).toBeVisible()
-    await expect(page.getByRole('button', { name: /Sign in/i })).toBeVisible()
+    // 检查登录表单元素
+    await expect(page.getByRole('heading', { name: /登录|Sign in/i })).toBeVisible()
+    await expect(page.getByPlaceholder(/邮箱|Email/i)).toBeVisible()
+    await expect(page.getByPlaceholder(/密码|Password/i)).toBeVisible()
+    await expect(page.getByRole('button', { name: /登录|Sign in/i }).first()).toBeVisible()
   })
 
   test('should show error for invalid login', async ({ page }) => {
     await page.goto('/login')
     
     // 填写错误的凭证
-    await page.getByPlaceholder('Email address').fill('invalid@example.com')
-    await page.getByPlaceholder('Password').fill('wrongpassword')
+    await page.getByPlaceholder(/邮箱|Email/i).fill('invalid@example.com')
+    await page.getByPlaceholder(/密码|Password/i).fill('wrongpassword')
     
-    // 点击登录
-    await page.getByRole('button', { name: /Sign in/i }).click()
+    // 点击登录按钮（第一个，排除 Google 登录）
+    await page.getByRole('button', { name: /^登录$|^Sign in$/i }).click()
     
     // 应该显示错误信息
-    await expect(page.locator('text=/error|invalid|incorrect/i')).toBeVisible({ timeout: 10000 })
+    await expect(page.locator('text=/错误|失败|error|invalid|incorrect/i')).toBeVisible({ timeout: 10000 })
   })
 
   test('should navigate to signup page', async ({ page }) => {
     await page.goto('/login')
     
-    // 点击注册链接（根据实际代码："create a new account"）
-    await page.getByRole('link', { name: /create a new account/i }).click()
+    // 点击注册链接
+    await page.getByRole('link', { name: /注册|创建账号|create.*account|sign up/i }).click()
     
     // 应该跳转到注册页面
     await expect(page).toHaveURL(/\/signup/)
@@ -42,7 +42,7 @@ test.describe('Authentication', () => {
     await page.goto('/signup')
     
     // 检查注册表单元素
-    await expect(page.getByPlaceholder('Email address')).toBeVisible()
-    await expect(page.getByPlaceholder(/Password/i)).toBeVisible()
+    await expect(page.getByPlaceholder(/邮箱|Email/i)).toBeVisible()
+    await expect(page.getByPlaceholder(/密码|Password/i)).toBeVisible()
   })
 })
