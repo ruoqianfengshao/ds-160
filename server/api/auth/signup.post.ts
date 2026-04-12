@@ -8,7 +8,7 @@ export default defineEventHandler(async (event) => {
   if (!email || !password) {
     throw createError({
       statusCode: 400,
-      message: 'Email and password are required'
+      message: '请输入邮箱和密码'
     })
   }
 
@@ -17,7 +17,7 @@ export default defineEventHandler(async (event) => {
   if (!emailRegex.test(email)) {
     throw createError({
       statusCode: 400,
-      message: 'Invalid email format'
+      message: '邮箱格式不正确'
     })
   }
 
@@ -25,7 +25,7 @@ export default defineEventHandler(async (event) => {
   if (password.length < 6) {
     throw createError({
       statusCode: 400,
-      message: 'Password must be at least 6 characters'
+      message: '密码至少需要 6 个字符'
     })
   }
 
@@ -38,7 +38,7 @@ export default defineEventHandler(async (event) => {
     if (existingUser.rows.length > 0) {
       throw createError({
         statusCode: 409,
-        message: 'Email already registered'
+        message: '该邮箱已被注册'
       })
     }
 
@@ -89,7 +89,7 @@ export default defineEventHandler(async (event) => {
     console.error('Signup error:', error)
     throw createError({
       statusCode: 500,
-      message: 'Registration failed'
+      message: '注册失败，请稍后重试'
     })
   }
 })
