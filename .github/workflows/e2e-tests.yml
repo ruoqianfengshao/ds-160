@@ -25,8 +25,10 @@ jobs:
       - name: Install dependencies
         run: npm ci
       
-      - name: Install Playwright browsers
-        run: npx playwright@1.40.0 install chromium --with-deps
+      - name: Install Playwright with browsers
+        run: |
+          npm install --save-dev @playwright/test@1.40.0
+          npx playwright install --with-deps chromium
       
       - name: Run E2E tests
         run: node e2e-test.mjs
