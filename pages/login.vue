@@ -3,12 +3,12 @@
     <div class="max-w-md w-full space-y-8">
       <div>
         <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
-          Sign in to DS-160 Helper
+          登录 DS-160 助手
         </h2>
         <p class="mt-2 text-center text-sm text-gray-600">
-          Or
+          或者
           <NuxtLink to="/signup" class="font-medium text-blue-600 hover:text-blue-500">
-            create a new account
+            创建新账号
           </NuxtLink>
         </p>
       </div>
@@ -20,7 +20,7 @@
 
         <div class="rounded-md shadow-sm -space-y-px">
           <div>
-            <label for="email" class="sr-only">Email address</label>
+            <label for="email" class="sr-only">邮箱地址</label>
             <input
               id="email"
               v-model="email"
@@ -29,11 +29,11 @@
               autocomplete="email"
               required
               class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
-              placeholder="Email address"
+              placeholder="邮箱地址"
             />
           </div>
           <div>
-            <label for="password" class="sr-only">Password</label>
+            <label for="password" class="sr-only">密码</label>
             <input
               id="password"
               v-model="password"
@@ -42,7 +42,7 @@
               autocomplete="current-password"
               required
               class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
-              placeholder="Password"
+              placeholder="密码"
             />
           </div>
         </div>
@@ -53,17 +53,17 @@
             :disabled="loading"
             class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
           >
-            {{ loading ? 'Signing in...' : 'Sign in' }}
+            {{ loading ? '登录中...' : '登录' }}
           </button>
         </div>
 
         <div class="mt-6">
           <div class="relative">
             <div class="absolute inset-0 flex items-center">
-              <div class="w-full border-t border-gray-300"></div>
+              <div class="w-full border-t border-gray-300" />
             </div>
             <div class="relative flex justify-center text-sm">
-              <span class="px-2 bg-gray-50 text-gray-500">Or continue with</span>
+              <span class="px-2 bg-gray-50 text-gray-500">或使用</span>
             </div>
           </div>
 
@@ -71,7 +71,7 @@
             <button
               type="button"
               @click="handleGoogleLogin"
-              class="w-full flex items-center justify-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+              class="w-full flex items-center justify-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
             >
               <svg class="w-5 h-5 mr-2" viewBox="0 0 24 24">
                 <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
@@ -79,7 +79,7 @@
                 <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
                 <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
               </svg>
-              Sign in with Google
+              使用 Google 登录
             </button>
           </div>
         </div>
@@ -93,41 +93,29 @@ const email = ref('')
 const password = ref('')
 const loading = ref(false)
 const error = ref('')
+const router = useRouter()
 
-// Check for OAuth error in URL
-onMounted(() => {
-  const route = useRoute()
-  if (route.query.error === 'oauth_failed') {
-    error.value = 'Google sign-in failed. Please try again.'
-  }
-})
-
-const handleLogin = async () => {
-  error.value = ''
+async function handleLogin() {
   loading.value = true
-
+  error.value = ''
+  
   try {
     const response = await $fetch('/api/auth/login', {
       method: 'POST',
-      body: {
-        email: email.value,
-        password: password.value
-      }
+      body: { email: email.value, password: password.value }
     })
-
+    
     if (response.success) {
-      // Redirect to dashboard
-      await navigateTo('/dashboard')
+      router.push('/dashboard')
     }
   } catch (e: any) {
-    error.value = e.data?.message || 'Login failed'
+    error.value = e.data?.message || '登录失败，请检查邮箱和密码'
   } finally {
     loading.value = false
   }
 }
 
-const handleGoogleLogin = () => {
-  // Redirect to Google OAuth endpoint
+async function handleGoogleLogin() {
   window.location.href = '/api/auth/google'
 }
 </script>
