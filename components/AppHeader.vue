@@ -5,7 +5,7 @@
         <!-- Logo / Brand -->
         <div class="flex items-center">
           <NuxtLink to="/" class="text-xl font-bold text-blue-600">
-            DS-160 Helper
+            DS-160 助手
           </NuxtLink>
         </div>
 
@@ -15,14 +15,14 @@
             to="/dashboard"
             class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium"
           >
-            Dashboard
+            仪表板
           </NuxtLink>
           
           <NuxtLink
             to="/profile"
             class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium"
           >
-            Profile
+            个人资料
           </NuxtLink>
 
           <!-- User Info -->
@@ -34,7 +34,7 @@
               @click="handleLogout"
               class="text-sm text-gray-700 hover:text-red-600 px-3 py-2 rounded-md font-medium"
             >
-              Logout
+              退出登录
             </button>
           </div>
         </nav>
@@ -45,13 +45,13 @@
             to="/login"
             class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium"
           >
-            Login
+            登录
           </NuxtLink>
           <NuxtLink
             to="/signup"
             class="bg-blue-600 text-white hover:bg-blue-700 px-4 py-2 rounded-md text-sm font-medium"
           >
-            Sign Up
+            注册
           </NuxtLink>
         </nav>
       </div>
@@ -76,7 +76,7 @@ onMounted(() => {
     // 尝试解析 JWT 获取邮箱（简单解码，不验证）
     try {
       const payload = JSON.parse(atob(token.value.split('.')[1]))
-      userEmail.value = payload.email || payload.sub || 'User'
+      userEmail.value = payload.email || payload.sub || '用户'
     } catch {
       // Fallback：调用 API 获取用户信息
       fetchUserInfo()
