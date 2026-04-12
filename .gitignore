@@ -19,3 +19,5 @@ dist
 *.sln
 *.sw?
 .supabase
+.vercel
+.env*.local

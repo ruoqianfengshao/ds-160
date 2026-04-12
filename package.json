@@ -17,6 +17,7 @@
     "jsonwebtoken": "^9.0.3",
     "nuxt": "^3.11.2",
     "pinia": "^2.1.7",
+    "postgres": "^3.4.9",
     "vue": "^3.4.21",
     "vue-router": "^4.3.0"
   },
