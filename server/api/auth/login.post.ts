@@ -8,7 +8,7 @@ export default defineEventHandler(async (event) => {
   if (!email || !password) {
     throw createError({
       statusCode: 400,
-      message: 'Email and password are required'
+      message: '请输入邮箱和密码'
     })
   }
 
@@ -21,7 +21,7 @@ export default defineEventHandler(async (event) => {
     if (rows.length === 0) {
       throw createError({
         statusCode: 401,
-        message: 'Invalid credentials'
+        message: '邮箱或密码错误'
       })
     }
 
@@ -33,7 +33,7 @@ export default defineEventHandler(async (event) => {
     if (!isValid) {
       throw createError({
         statusCode: 401,
-        message: 'Invalid credentials'
+        message: '邮箱或密码错误'
       })
     }
 
@@ -73,7 +73,7 @@ export default defineEventHandler(async (event) => {
     console.error('Login error:', error)
     throw createError({
       statusCode: 500,
-      message: 'Login failed'
+      message: '登录失败，请稍后重试'
     })
   }
 })
