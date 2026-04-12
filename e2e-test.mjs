@@ -7,7 +7,7 @@
  * Uses Playwright for browser automation
  */
 
-import { chromium } from 'playwright';
+import { chromium } from '@playwright/test';
 import { writeFileSync, mkdirSync } from 'fs';
 
 const BASE_URL = 'https://ds-160-ten.vercel.app';

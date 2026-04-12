@@ -7,7 +7,10 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "test:e2e": "node e2e-test.mjs",
+    "test:api": "node e2e-api-test.mjs",
+    "test": "npm run test:api"
   },
   "dependencies": {
     "@pinia/nuxt": "^0.5.1",
@@ -24,6 +27,7 @@
   },
   "devDependencies": {
     "@nuxtjs/tailwindcss": "^6.12.0",
+    "@playwright/test": "^1.40.0",
     "@types/node": "^20.12.7",
     "playwright": "^1.59.1",
     "typescript": "^5.4.5"

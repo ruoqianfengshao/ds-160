@@ -1,0 +1,42 @@
+{
+  "passed": 0,
+  "failed": 5,
+  "skipped": 0,
+  "tests": [
+    {
+      "testId": "E2E-001",
+      "name": "User Registration",
+      "status": "FAIL",
+      "error": "page.goto: Timeout 30000ms exceeded.\nCall log:\n  \u001b[2m- navigating to \"https://ds-160-ten.vercel.app/signup\", waiting until \"networkidle\"\u001b[22m\n",
+      "timestamp": "2026-04-12T11:11:10.871Z"
+    },
+    {
+      "testId": "E2E-002",
+      "name": "User Login",
+      "status": "FAIL",
+      "error": "page.goto: Timeout 30000ms exceeded.\nCall log:\n  \u001b[2m- navigating to \"https://ds-160-ten.vercel.app/login\", waiting until \"networkidle\"\u001b[22m\n",
+      "timestamp": "2026-04-12T11:12:10.905Z"
+    },
+    {
+      "testId": "E2E-003",
+      "name": "Dashboard Access",
+      "status": "FAIL",
+      "error": "page.goto: Timeout 30000ms exceeded.\nCall log:\n  \u001b[2m- navigating to \"https://ds-160-ten.vercel.app/login\", waiting until \"load\"\u001b[22m\n",
+      "timestamp": "2026-04-12T11:13:10.938Z"
+    },
+    {
+      "testId": "E2E-008",
+      "name": "Unauthorized Access Control",
+      "status": "FAIL",
+      "error": "page.goto: Timeout 30000ms exceeded.\nCall log:\n  \u001b[2m- navigating to \"https://ds-160-ten.vercel.app/dashboard\", waiting until \"networkidle\"\u001b[22m\n",
+      "timestamp": "2026-04-12T11:14:10.973Z"
+    },
+    {
+      "testId": "E2E-009",
+      "name": "Form Validation",
+      "status": "FAIL",
+      "error": "page.goto: Timeout 30000ms exceeded.\nCall log:\n  \u001b[2m- navigating to \"https://ds-160-ten.vercel.app/signup\", waiting until \"load\"\u001b[22m\n",
+      "timestamp": "2026-04-12T11:15:11.004Z"
+    }
+  ]
+}
