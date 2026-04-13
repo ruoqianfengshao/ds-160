@@ -8,8 +8,13 @@
       :for="inputId"
       class="block text-sm font-medium text-gray-700 mb-2"
     >
-      {{ label }}
-      <span v-if="required" class="text-red-500 ml-1">*</span>
+      <div class="flex items-baseline gap-2">
+        <span>{{ label }}</span>
+        <span v-if="required" class="text-red-500">*</span>
+      </div>
+      <div v-if="secondaryLabel" class="text-xs text-gray-500 font-normal mt-0.5">
+        {{ secondaryLabel }}
+      </div>
     </label>
 
     <!-- High-risk field warning -->
@@ -63,6 +68,7 @@ import { useDS160Store } from '~/stores/ds160'
 
 interface Props {
   label?: string
+  secondaryLabel?: string
   modelValue: string | number
   type?: string
   placeholder?: string

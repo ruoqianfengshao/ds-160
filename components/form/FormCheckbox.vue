@@ -1,5 +1,5 @@
 <template>
-  <div class="mb-4">
+  <div class="mb-4" :field-path="fieldPath">
     <label class="flex items-center cursor-pointer group">
       <input
         type="checkbox"
@@ -13,8 +13,13 @@
         class="ml-3 text-gray-700 group-hover:text-gray-900 transition-colors"
         :class="{ 'opacity-50': disabled }"
       >
-        {{ label }}
-        <span v-if="required" class="text-red-500 ml-1">*</span>
+        <div>
+          <span>{{ label }}</span>
+          <span v-if="required" class="text-red-500 ml-1">*</span>
+        </div>
+        <div v-if="secondaryLabel" class="text-xs text-gray-500 font-normal mt-0.5">
+          {{ secondaryLabel }}
+        </div>
       </span>
     </label>
     <p v-if="hint" class="mt-1 ml-8 text-sm text-gray-500">
@@ -26,10 +31,12 @@
 <script setup lang="ts">
 interface Props {
   label: string
+  secondaryLabel?: string
   modelValue: boolean
   required?: boolean
   disabled?: boolean
   hint?: string
+  fieldPath?: string
 }
 
 withDefaults(defineProps<Props>(), {
