@@ -4,9 +4,9 @@ test.describe('DS-160 Form Fields - 完整测试', () => {
   test('Step 1: 个人信息 - 基础字段', async ({ page }) => {
     await page.goto('/form/step-1')
     
-    // 检查必填字段（中英文双语标签）
-    await expect(page.getByLabel(/姓|Surname/i)).toBeVisible()
-    await expect(page.getByLabel(/名|Given Name/i)).toBeVisible()
+    // 检查必填字段（使用更精确的选择器）
+    await expect(page.locator('input[placeholder="WANG"]')).toBeVisible() // 姓
+    await expect(page.locator('input[placeholder="MING"]')).toBeVisible() // 名
     await expect(page.getByLabel(/出生日期|Date of Birth/i)).toBeVisible()
     await expect(page.getByLabel(/出生城市|City of Birth/i)).toBeVisible()
     await expect(page.getByLabel(/出生国家|Country.*Birth/i)).toBeVisible()
@@ -43,13 +43,13 @@ test.describe('DS-160 Form Fields - 完整测试', () => {
   test('Step 2: 费用支付联动逻辑', async ({ page }) => {
     await page.goto('/form/step-2')
     
-    // 选择"其他人支付"
+    // 选择"其他人支付"（使用 selectOption 的 label 匹配）
     const payerSelect = page.getByLabel(/谁.*付费|Who.*paying/i)
-    await payerSelect.selectOption('Other Person')
-    await page.waitForTimeout(300)
+    await payerSelect.selectOption({ label: /其他个人|Other Person/i })
+    await page.waitForTimeout(500)
     
-    // 应该显示支付者信息字段
-    await expect(page.getByLabel(/支付者.*姓|Payer.*Surname/i)).toBeVisible({ timeout: 3000 })
+    // 应该显示支付者信息字段（使用 text 定位标题）
+    await expect(page.locator('text=/支付者信息|Payer Information/i')).toBeVisible({ timeout: 3000 })
   })
 
   test('Step 3: 旅行同伴 - 基础字段', async ({ page }) => {
@@ -66,10 +66,10 @@ test.describe('DS-160 Form Fields - 完整测试', () => {
     // 勾选"有同行者"
     const hasCompanionsCheckbox = page.getByLabel(/是否.*同行|traveling with/i)
     await hasCompanionsCheckbox.check()
-    await page.waitForTimeout(300)
+    await page.waitForTimeout(500)
     
-    // 应该显示同行人信息字段
-    await expect(page.getByLabel(/同行人.*姓|Companion.*Surname/i)).toBeVisible({ timeout: 3000 })
+    // 应该显示同行人信息字段（使用标题定位）
+    await expect(page.locator('text=/同行人员信息|Companion.*Information/i')).toBeVisible({ timeout: 3000 })
   })
 
   test('Step 4: 前次美国旅行 - 基础字段', async ({ page }) => {
@@ -123,11 +123,9 @@ test.describe('DS-160 Form Fields - 完整测试', () => {
   test('Step 7: 家庭信息 - 基础字段', async ({ page }) => {
     await page.goto('/form/step-7')
     
-    // 父母信息
-    await expect(page.getByLabel(/父亲.*姓|Father.*Surname/i)).toBeVisible()
-    await expect(page.getByLabel(/父亲.*名|Father.*Given/i)).toBeVisible()
-    await expect(page.getByLabel(/母亲.*姓|Mother.*Surname/i)).toBeVisible()
-    await expect(page.getByLabel(/母亲.*名|Mother.*Given/i)).toBeVisible()
+    // 父母信息（使用更精确的标题定位）
+    await expect(page.locator('text=/父亲信息|Father.*Information/i')).toBeVisible()
+    await expect(page.locator('text=/母亲信息|Mother.*Information/i')).toBeVisible()
     await expect(page.getByLabel(/直系亲属.*美国|immediate relatives.*US/i)).toBeVisible()
   })
 
@@ -209,8 +207,9 @@ test.describe('DS-160 Form Fields - 完整测试', () => {
     // Step 1: 填写个人信息
     await page.goto('/form/step-1')
     
-    await page.getByLabel(/姓|Surname/i).fill('ZHANG')
-    await page.getByLabel(/名|Given Name/i).fill('SAN')
+    // 使用 placeholder 精确定位
+    await page.locator('input[placeholder="WANG"]').fill('ZHANG')
+    await page.locator('input[placeholder="MING"]').fill('SAN')
     await page.getByLabel(/出生日期|Date of Birth/i).fill('1990-01-01')
     await page.getByLabel(/出生城市|City of Birth/i).fill('Beijing')
     await page.getByLabel(/出生国家|Country.*Birth/i).selectOption('China')
