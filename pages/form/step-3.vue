@@ -2,134 +2,112 @@
   <div class="min-h-screen bg-gray-50">
     <FormNavigation 
       :current-step="3" 
-      step-title="Passport Information"
+      step-title="旅行同伴"
     />
 
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div class="card">
-        <h2 class="text-2xl font-bold mb-6">Passport Information</h2>
+        <h2 class="text-2xl font-bold mb-2">旅行同伴</h2>
+        <p class="text-sm text-gray-500 mb-6">Travel Companions</p>
         <p class="text-gray-600 mb-8">
-          Enter your passport details exactly as they appear on your passport.
+          请说明是否有其他人与您同行前往美国。
         </p>
 
         <form @submit.prevent="saveAndContinue" class="space-y-6">
-          <!-- Passport Number -->
-          <FormInput
-            v-model="formData.passportNumber"
-            label="Passport Number"
-            placeholder="A12345678"
-            required
-            field-path="passportInfo.passportNumber"
-            hint="Enter exactly as shown on your passport"
+          <!-- Are you traveling with others -->
+          <FormCheckbox
+            v-model="formData.hasTravelCompanions"
+            label="是否有其他人与您同行？"
+            secondary-label="Are you traveling with other people?"
+            hint="包括家人、朋友或团组成员"
           />
 
-          <!-- Passport Book Number (Optional) -->
-          <FormInput
-            v-model="formData.passportBookNumber"
-            label="Passport Book Number (if applicable)"
-            placeholder="C01234567"
-            hint="Found on the inside cover of some passports"
-          />
+          <!-- Travel Companions List (conditional) -->
+          <div v-if="formData.hasTravelCompanions" class="pl-8 space-y-4 border-l-4 border-primary-200">
+            <h3 class="text-lg font-semibold mb-2">同行人员信息</h3>
+            <p class="text-sm text-gray-500 mb-4">Information About Travel Companions</p>
 
-          <!-- Country of Issuance -->
-          <FormSelect
-            v-model="formData.countryOfIssuance"
-            label="Country/Authority That Issued Passport"
-            :options="countries"
-            required
-          />
-
-          <!-- Issuance City -->
-          <FormInput
-            v-model="formData.issuanceCity"
-            label="City Where Passport Was Issued"
-            placeholder="London"
-            required
-          />
-
-          <!-- Issuance State (Optional) -->
-          <FormInput
-            v-model="formData.issuanceState"
-            label="State/Province Where Passport Was Issued (if applicable)"
-            placeholder="England"
-          />
-
-          <!-- Issuance Country -->
-          <FormSelect
-            v-model="formData.issuanceCountry"
-            label="Country Where Passport Was Issued"
-            :options="countries"
-            required
-          />
-
-          <!-- Issuance Date -->
-          <FormInput
-            v-model="formData.issuanceDate"
-            type="date"
-            label="Passport Issuance Date"
-            required
-            hint="MM/DD/YYYY format"
-          />
-
-          <!-- Expiration Date -->
-          <FormInput
-            v-model="formData.expirationDate"
-            type="date"
-            label="Passport Expiration Date"
-            required
-            hint="Must be valid for at least 6 months beyond your intended stay"
-          />
-
-          <!-- Lost/Stolen Passport Section -->
-          <div class="border-t border-gray-200 pt-6 mt-6">
-            <FormCheckbox
-              v-model="formData.hasLostPassport"
-              label="Have you ever lost a passport or had one stolen?"
-              field-path="passportInfo.hasLostPassport"
-            />
-
-            <!-- Lost Passport Details (conditional) -->
-            <div v-if="formData.hasLostPassport" class="mt-4 pl-8 space-y-4 border-l-4 border-warning-500">
-              <div class="p-4 bg-warning-50 rounded-lg">
-                <p class="text-sm font-semibold text-warning-800 mb-2">
-                  ⚠️ Important: Lost/Stolen Passport
-                </p>
-                <p class="text-sm text-warning-700">
-                  You must provide details about any lost or stolen passport. 
-                  Failure to disclose this information may result in application denial.
-                </p>
+            <div 
+              v-for="(companion, index) in formData.companions" 
+              :key="index"
+              class="p-4 bg-gray-50 rounded-lg"
+            >
+              <div class="flex justify-between items-center mb-4">
+                <h4 class="font-semibold">同行人 {{ index + 1 }}</h4>
+                <button
+                  v-if="formData.companions && formData.companions.length > 1"
+                  type="button"
+                  @click="removeCompanion(index)"
+                  class="text-red-600 hover:text-red-700 text-sm"
+                >
+                  删除
+                </button>
               </div>
-
+              
               <FormInput
-                v-model="formData.lostPassportDetails!.passportNumber"
-                label="Lost/Stolen Passport Number"
-                placeholder="B87654321"
-                required
+                v-model="companion.surname"
+                label="姓"
+                secondary-label="Surname"
+                placeholder="WANG"
+                no-margin
+                class="mb-3"
+              />
+              
+              <FormInput
+                v-model="companion.givenName"
+                label="名"
+                secondary-label="Given Name"
+                placeholder="MING"
+                no-margin
+                class="mb-3"
               />
 
               <FormSelect
-                v-model="formData.lostPassportDetails!.countryOfIssuance"
-                label="Country That Issued Lost/Stolen Passport"
-                :options="countries"
-                required
+                v-model="companion.relationship"
+                label="与您的关系"
+                secondary-label="Relationship to You"
+                :options="relationshipOptions"
+                no-margin
               />
-
-              <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2">
-                  Explanation of Loss/Theft <span class="text-red-500">*</span>
-                </label>
-                <textarea
-                  v-model="formData.lostPassportDetails!.explanation"
-                  rows="4"
-                  class="input-field"
-                  placeholder="Describe the circumstances of how your passport was lost or stolen..."
-                  required
-                ></textarea>
-                <p class="mt-1 text-sm text-gray-500">
-                  Provide a detailed explanation of when, where, and how your passport was lost or stolen.
-                </p>
-              </div>
             </div>
+
+            <button
+              type="button"
+              @click="addCompanion"
+              class="btn-secondary w-full"
+            >
+              + 添加更多同行人
+            </button>
+          </div>
+
+          <!-- Are you part of a group or organization -->
+          <FormCheckbox
+            v-model="formData.isPartOfGroup"
+            label="您是否属于某个团组或组织？"
+            secondary-label="Are you traveling as part of a group or organization?"
+            hint="例如旅行团、学校团体、宗教组织等"
+          />
+
+          <!-- Group Information (conditional) -->
+          <div v-if="formData.isPartOfGroup" class="pl-8 space-y-4 border-l-4 border-primary-200">
+            <h3 class="text-lg font-semibold mb-2">团组信息</h3>
+            <p class="text-sm text-gray-500 mb-4">Group or Organization Information</p>
+
+            <FormInput
+              v-model="formData.groupInfo.name"
+              label="团组/组织名称"
+              secondary-label="Name of Group or Organization"
+              placeholder="ABC Travel Group"
+              required
+            />
+
+            <FormInput
+              v-model="formData.groupInfo.type"
+              label="团组类型"
+              secondary-label="Type of Group"
+              placeholder="旅行团/商务团/学生团等"
+              hint="例如：旅游团、商务考察团、学术交流团等"
+            />
           </div>
 
           <!-- Auto-save indicator -->
@@ -137,7 +115,7 @@
             <svg class="w-4 h-4 inline mr-2 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
             </svg>
-            Your progress is automatically saved
+            您的填写进度会自动保存
           </div>
         </form>
       </div>
@@ -156,19 +134,12 @@ const store = useDS160Store()
 const router = useRouter()
 
 const formData = reactive({
-  passportNumber: store.formData.passportInfo.passportNumber,
-  passportBookNumber: store.formData.passportInfo.passportBookNumber || '',
-  countryOfIssuance: store.formData.passportInfo.countryOfIssuance,
-  issuanceCity: store.formData.passportInfo.issuanceCity,
-  issuanceState: store.formData.passportInfo.issuanceState || '',
-  issuanceCountry: store.formData.passportInfo.issuanceCountry,
-  issuanceDate: store.formData.passportInfo.issuanceDate,
-  expirationDate: store.formData.passportInfo.expirationDate,
-  hasLostPassport: store.formData.passportInfo.hasLostPassport,
-  lostPassportDetails: store.formData.passportInfo.lostPassportDetails || {
-    passportNumber: '',
-    countryOfIssuance: '',
-    explanation: '',
+  hasTravelCompanions: store.formData.travelCompanions.hasTravelCompanions || false,
+  companions: store.formData.travelCompanions.companions || [{ surname: '', givenName: '', relationship: '' }],
+  isPartOfGroup: store.formData.travelCompanions.isPartOfGroup || false,
+  groupInfo: {
+    name: store.formData.travelCompanions.groupInfo?.name || '',
+    type: store.formData.travelCompanions.groupInfo?.type || '',
   },
 })
 
@@ -176,11 +147,25 @@ watch(formData, () => {
   store.updateStepData(3, formData)
 }, { deep: true })
 
-const countries = [
-  'United States', 'China', 'India', 'United Kingdom', 'Canada', 
-  'Australia', 'Germany', 'France', 'Japan', 'South Korea',
-  'Mexico', 'Brazil', 'Argentina', 'Spain', 'Italy',
-].sort()
+const relationshipOptions = [
+  { value: 'Spouse', label: '配偶 (Spouse)' },
+  { value: 'Child', label: '子女 (Child)' },
+  { value: 'Parent', label: '父母 (Parent)' },
+  { value: 'Sibling', label: '兄弟姐妹 (Sibling)' },
+  { value: 'Friend', label: '朋友 (Friend)' },
+  { value: 'Colleague', label: '同事 (Colleague)' },
+  { value: 'Other Relative', label: '其他亲属 (Other Relative)' },
+  { value: 'Other', label: '其他 (Other)' },
+]
+
+function addCompanion() {
+  if (!formData.companions) formData.companions = []
+  formData.companions.push({ surname: '', givenName: '', relationship: '' })
+}
+
+function removeCompanion(index: number) {
+  formData.companions?.splice(index, 1)
+}
 
 function saveAndContinue() {
   store.updateStepData(3, formData)
