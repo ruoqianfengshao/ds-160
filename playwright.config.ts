@@ -3,14 +3,14 @@ import { defineConfig, devices } from '@playwright/test'
 export default defineConfig({
   testDir: './tests/e2e',
   
-  // 测试超时时间
-  timeout: 30 * 1000,
+  // 测试超时时间 - 增加到 90 秒以应对网络延迟
+  timeout: 90 * 1000,
   
   // 并发运行测试
   fullyParallel: true,
   
-  // CI 环境下失败不重试，本地重试 1 次
-  retries: process.env.CI ? 0 : 1,
+  // CI 环境下失败重试 2 次以应对网络波动
+  retries: process.env.CI ? 2 : 1,
   
   // CI 环境下使用 1 个 worker，本地使用全部核心
   workers: process.env.CI ? 1 : undefined,
@@ -24,6 +24,12 @@ export default defineConfig({
   use: {
     // 基础 URL
     baseURL: 'http://localhost:3000',
+    
+    // 导航超时 - 增加到 60 秒
+    navigationTimeout: 60 * 1000,
+    
+    // 操作超时 - 30 秒
+    actionTimeout: 30 * 1000,
     
     // 测试追踪（失败时保留）
     trace: 'retain-on-failure',

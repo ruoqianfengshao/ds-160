@@ -15,6 +15,10 @@ const TEST_EMAIL = `e2etest${Date.now()}@example.com`;
 const TEST_PASSWORD = 'Test123456';
 const SCREENSHOTS_DIR = './test-screenshots';
 
+// Health check configuration
+const HEALTH_CHECK_MAX_RETRIES = 5;
+const HEALTH_CHECK_RETRY_DELAY = 10000; // 10 seconds
+
 // Ensure screenshots directory exists
 try {
   mkdirSync(SCREENSHOTS_DIR, { recursive: true });
@@ -47,6 +51,43 @@ function logTest(testId, name, status, error = null) {
     results.skipped++;
     log(`⏭️  ${testId}: ${name}`, 'SKIP');
   }
+}
+
+/**
+ * Health check function to verify the application is accessible
+ * Retries multiple times with delays to handle cold starts
+ */
+async function healthCheck(url, maxRetries = HEALTH_CHECK_MAX_RETRIES) {
+  log(`Starting health check for ${url}...`);
+  
+  for (let i = 0; i < maxRetries; i++) {
+    try {
+      log(`Health check attempt ${i + 1}/${maxRetries}...`);
+      
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: { 'User-Agent': 'DS-160-E2E-Test/1.0' },
+        signal: AbortSignal.timeout(30000) // 30 second timeout
+      });
+      
+      if (response.ok || response.status === 304) {
+        log(`✅ Health check passed! Status: ${response.status}`, 'SUCCESS');
+        return true;
+      }
+      
+      log(`Health check returned status ${response.status}`, 'WARN');
+      
+    } catch (error) {
+      log(`Health check failed: ${error.message}`, 'WARN');
+      
+      if (i < maxRetries - 1) {
+        log(`Waiting ${HEALTH_CHECK_RETRY_DELAY / 1000}s before retry...`);
+        await new Promise(resolve => setTimeout(resolve, HEALTH_CHECK_RETRY_DELAY));
+      }
+    }
+  }
+  
+  throw new Error(`Application not responding after ${maxRetries} health check attempts`);
 }
 
 async function takeScreenshot(page, name) {
@@ -324,6 +365,32 @@ async function runAllTests() {
   log(`Base URL: ${BASE_URL}`);
   log(`Test Email: ${TEST_EMAIL}`);
   log('='.repeat(60));
+  
+  // Perform health check before starting tests
+  try {
+    await healthCheck(BASE_URL);
+  } catch (error) {
+    log('❌ Health check failed! Aborting test suite.', 'ERROR');
+    log(error.message, 'ERROR');
+    
+    // Mark all tests as skipped
+    ['E2E-001', 'E2E-002', 'E2E-003', 'E2E-008', 'E2E-009'].forEach((testId, index) => {
+      const testNames = [
+        'User Registration',
+        'User Login',
+        'Dashboard Access',
+        'Unauthorized Access Control',
+        'Form Validation'
+      ];
+      logTest(testId, testNames[index], 'FAIL', `Health check failed: ${error.message}`);
+    });
+    
+    // Write results and exit
+    const reportPath = './e2e-test-results.json';
+    writeFileSync(reportPath, JSON.stringify(results, null, 2));
+    log(`Test results saved to: ${reportPath}`);
+    process.exit(1);
+  }
   
   const browser = await chromium.launch({ 
     headless: true,
