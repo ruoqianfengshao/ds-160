@@ -11,8 +11,19 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
 
-    container:
-      image: mcr.microsoft.com/playwright:v1.40.0-focal
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: ds160_test
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
 
     steps:
       - name: Checkout code
@@ -27,13 +38,29 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Setup test database
+        run: |
+          # Install PostgreSQL client
+          sudo apt-get update
+          sudo apt-get install -y postgresql-client
+          
+          # Run migrations (if exists)
+          PGPASSWORD=postgres psql -h localhost -U postgres -d ds160_test -f supabase/schema.sql || echo "Schema file not found, skipping"
+        env:
+          POSTGRES_URL: postgresql://postgres:postgres@localhost:5432/ds160_test
+
       - name: Build application
         run: npm run build
+        env:
+          POSTGRES_URL: postgresql://postgres:postgres@localhost:5432/ds160_test
+          JWT_SECRET: test-secret-key-for-ci-only
 
       - name: Start preview server
         run: npm run preview -- --port 3000 &
         env:
           NODE_ENV: production
+          POSTGRES_URL: postgresql://postgres:postgres@localhost:5432/ds160_test
+          JWT_SECRET: test-secret-key-for-ci-only
 
       - name: Wait for server
         run: npx wait-on http://localhost:3000 -t 30000
@@ -47,6 +74,7 @@ jobs:
         run: npx playwright test
         env:
           CI: true
+          POSTGRES_URL: postgresql://postgres:postgres@localhost:5432/ds160_test
 
       - name: Upload test results
         if: always()
