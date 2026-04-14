@@ -8,35 +8,35 @@
       "name": "User Registration",
       "status": "FAIL",
       "error": "page.waitForURL: Timeout 15000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation to \"**/dashboard\" until \"load\"\n============================================================",
-      "timestamp": "2026-04-14T15:11:53.212Z"
+      "timestamp": "2026-04-14T17:01:21.745Z"
     },
     {
       "testId": "E2E-002",
       "name": "User Login",
       "status": "FAIL",
       "error": "page.waitForURL: Timeout 15000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation to \"**/dashboard\" until \"load\"\n============================================================",
-      "timestamp": "2026-04-14T15:12:11.009Z"
+      "timestamp": "2026-04-14T17:01:40.611Z"
     },
     {
       "testId": "E2E-003",
       "name": "Dashboard Access",
       "status": "FAIL",
       "error": "page.waitForURL: Timeout 15000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation to \"**/dashboard\" until \"load\"\n============================================================",
-      "timestamp": "2026-04-14T15:12:26.259Z"
+      "timestamp": "2026-04-14T17:01:56.747Z"
     },
     {
       "testId": "E2E-008",
       "name": "Unauthorized Access Control",
       "status": "FAIL",
       "error": "Expected redirect to /login, got http://localhost:3000/dashboard",
-      "timestamp": "2026-04-14T15:12:29.070Z"
+      "timestamp": "2026-04-14T17:02:00.621Z"
     },
     {
       "testId": "E2E-009",
       "name": "Form Validation",
       "status": "PASS",
       "error": null,
-      "timestamp": "2026-04-14T15:12:35.392Z"
+      "timestamp": "2026-04-14T17:02:07.559Z"
     }
   ]
 }

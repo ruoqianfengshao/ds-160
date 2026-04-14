@@ -109,14 +109,14 @@ async function handleLogin() {
     })
     
     if (response.success) {
-      // Set user immediately to authStore (sync)
-      authStore.user = response.user
+      // Set user in authStore
+      authStore.setUser(response.user)
       
-      // Ensure state is fully synced before navigation
+      // Wait for state to sync
       await nextTick()
       
-      // Navigate after state is synced
-      await router.push('/dashboard')
+      // Force a hard navigation using window.location to ensure clean page load
+      window.location.href = '/dashboard'
     }
   } catch (e: any) {
     error.value = e.data?.message || '登录失败，请检查邮箱和密码'

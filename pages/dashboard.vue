@@ -381,7 +381,9 @@ import { useAuthStore } from '~/stores/auth'
 
 definePageMeta({
   layout: 'default',
-  middleware: 'auth' // Protect dashboard - requires authentication
+  // Dashboard allows both authenticated and unauthenticated users
+  // Auth is handled at feature level (sync, multiple drafts, etc.)
+  requiresAuth: false
 })
 
 const store = useDS160Store()
