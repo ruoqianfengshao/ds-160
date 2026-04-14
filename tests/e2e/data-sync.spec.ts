@@ -1,5 +1,20 @@
 import { test, expect } from '@playwright/test'
-import applicantData from '../fixtures/realistic-applicant.json' assert { type: 'json' }
+import { readFile } from 'fs/promises'
+import { fileURLToPath } from 'url'
+import { dirname, join } from 'path'
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
+
+// 加载测试数据
+let applicantData: any
+test.beforeAll(async () => {
+  const applicantDataJson = await readFile(
+    join(__dirname, '../fixtures/realistic-applicant.json'),
+    'utf-8'
+  )
+  applicantData = JSON.parse(applicantDataJson)
+})
 
 /**
  * 数据同步测试

@@ -1,5 +1,10 @@
 import { test, expect } from '@playwright/test'
-import applicantData from '../fixtures/realistic-applicant.json' assert { type: 'json' }
+import { readFile } from 'fs/promises'
+import { fileURLToPath } from 'url'
+import { dirname, join } from 'path'
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
 
 /**
  * 真实美签申请端到端测试
@@ -13,6 +18,12 @@ test.describe('DS-160 真实申请流程', () => {
   test.setTimeout(300000) // 5分钟超时
 
   test('完整填写并提交 DS-160 表单', async ({ page }) => {
+    // 加载测试数据
+    const applicantDataJson = await readFile(
+      join(__dirname, '../fixtures/realistic-applicant.json'),
+      'utf-8'
+    )
+    const applicantData = JSON.parse(applicantDataJson)
     // Step 0: 访问首页并开始
     await page.goto('/')
     await expect(page.locator('h1')).toContainText('DS-160')
