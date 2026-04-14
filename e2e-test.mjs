@@ -10,7 +10,7 @@
 import { chromium } from '@playwright/test';
 import { writeFileSync, mkdirSync } from 'fs';
 
-const BASE_URL = 'https://ds-160-ten.vercel.app';
+const BASE_URL = process.env.BASE_URL || process.env.CI ? 'http://localhost:3000' : 'https://ds-160-ten.vercel.app';
 const TEST_EMAIL = `e2etest${Date.now()}@example.com`;
 const TEST_PASSWORD = 'Test123456';
 const SCREENSHOTS_DIR = './test-screenshots';
