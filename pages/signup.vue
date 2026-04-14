@@ -130,14 +130,14 @@ const handleSignup = async () => {
     })
 
     if (response.success) {
-      // Set user in authStore
+      // Set user in authStore first
       authStore.setUser(response.user)
       
-      // Wait for state to sync
+      // Wait for DOM update
       await nextTick()
       
-      // Force a hard navigation using window.location to ensure clean page load
-      window.location.href = '/dashboard'
+      // Use Nuxt's navigateTo for proper client-side navigation
+      await navigateTo('/dashboard', { replace: true })
     }
   } catch (e: any) {
     error.value = e.data?.message || 'Signup failed'

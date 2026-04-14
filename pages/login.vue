@@ -109,14 +109,15 @@ async function handleLogin() {
     })
     
     if (response.success) {
-      // Set user in authStore
+      // Set user in authStore first
       authStore.setUser(response.user)
       
-      // Wait for state to sync
+      // Wait for DOM update
       await nextTick()
       
-      // Force a hard navigation using window.location to ensure clean page load
-      window.location.href = '/dashboard'
+      // Use Nuxt's navigateTo for proper client-side navigation
+      // replace: true prevents back button issues
+      await navigateTo('/dashboard', { replace: true })
     }
   } catch (e: any) {
     error.value = e.data?.message || '登录失败，请检查邮箱和密码'
