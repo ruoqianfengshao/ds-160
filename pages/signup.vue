@@ -100,6 +100,9 @@
 </template>
 
 <script setup lang="ts">
+import { useAuthStore } from '~/stores/auth'
+
+const authStore = useAuthStore()
 const fullName = ref('')
 const email = ref('')
 const password = ref('')
@@ -127,6 +130,9 @@ const handleSignup = async () => {
     })
 
     if (response.success) {
+      // Load user state before navigation
+      await authStore.loadUser()
+      
       // Redirect to dashboard
       await navigateTo('/dashboard')
     }

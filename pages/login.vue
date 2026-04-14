@@ -89,6 +89,9 @@
 </template>
 
 <script setup lang="ts">
+import { useAuthStore } from '~/stores/auth'
+
+const authStore = useAuthStore()
 const email = ref('')
 const password = ref('')
 const loading = ref(false)
@@ -106,6 +109,9 @@ async function handleLogin() {
     })
     
     if (response.success) {
+      // Load user state before navigation
+      await authStore.loadUser()
+      
       router.push('/dashboard')
     }
   } catch (e: any) {
