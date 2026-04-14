@@ -12,8 +12,8 @@ export default defineConfig({
   // CI 环境下失败重试 2 次以应对网络波动
   retries: process.env.CI ? 2 : 1,
   
-  // CI 环境下使用 1 个 worker，本地使用全部核心
-  workers: process.env.CI ? 1 : undefined,
+  // CI 环境下使用 2 个 worker 提高速度，本地使用全部核心
+  workers: process.env.CI ? 2 : undefined,
   
   // 测试报告
   reporter: [
