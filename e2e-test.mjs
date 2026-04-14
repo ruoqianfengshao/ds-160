@@ -10,7 +10,8 @@
 import { chromium } from '@playwright/test';
 import { writeFileSync, mkdirSync } from 'fs';
 
-const BASE_URL = process.env.BASE_URL || process.env.CI ? 'http://localhost:3000' : 'https://ds-160-ten.vercel.app';
+// Default to localhost for better reliability; override with BASE_URL env var
+const BASE_URL = process.env.BASE_URL || 'http://localhost:3000';
 const TEST_EMAIL = `e2etest${Date.now()}@example.com`;
 const TEST_PASSWORD = 'Test123456';
 const SCREENSHOTS_DIR = './test-screenshots';
@@ -126,13 +127,11 @@ async function test001_UserRegistration(browser) {
     
     log(`Submitting registration with email: ${TEST_EMAIL}`);
     
-    // Click submit and wait for navigation
-    await Promise.all([
-      page.waitForNavigation({ timeout: 10000 }),
-      page.click('button[type="submit"]')
-    ]);
+    // Click submit and wait for URL change
+    await page.click('button[type="submit"]');
+    await page.waitForURL('**/dashboard', { timeout: 15000 });
     
-    // Verify redirect to dashboard
+    // Verify we're on dashboard
     const currentUrl = page.url();
     if (!currentUrl.includes('/dashboard')) {
       throw new Error(`Expected redirect to /dashboard, got ${currentUrl}`);
@@ -181,13 +180,11 @@ async function test002_UserLogin(browser) {
     
     log(`Logging in with email: ${TEST_EMAIL}`);
     
-    // Submit and wait for navigation
-    await Promise.all([
-      page.waitForNavigation({ timeout: 10000 }),
-      page.click('button[type="submit"]')
-    ]);
+    // Submit and wait for URL change
+    await page.click('button[type="submit"]');
+    await page.waitForURL('**/dashboard', { timeout: 15000 });
     
-    // Verify redirect to dashboard
+    // Verify we're on dashboard
     const currentUrl = page.url();
     if (!currentUrl.includes('/dashboard')) {
       throw new Error(`Expected redirect to /dashboard, got ${currentUrl}`);
@@ -227,10 +224,8 @@ async function test003_DashboardAccess(browser) {
     await page.goto(`${BASE_URL}/login`);
     await page.fill('input[type="email"]', TEST_EMAIL);
     await page.fill('input[type="password"]', TEST_PASSWORD);
-    await Promise.all([
-      page.waitForNavigation(),
-      page.click('button[type="submit"]')
-    ]);
+    await page.click('button[type="submit"]');
+    await page.waitForURL('**/dashboard', { timeout: 15000 });
     
     // Check dashboard elements
     await page.waitForSelector('text=Dashboard', { timeout: 5000 });

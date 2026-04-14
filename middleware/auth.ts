@@ -1,16 +1,21 @@
-import { useAuthStore } from '~/stores/auth'
-
-export default defineNuxtRouteMiddleware((to, from) => {
-  const authStore = useAuthStore()
-  
-  // Skip middleware on server
-  if (process.server) return
-
-  // Check if route requires auth
+export default defineNuxtRouteMiddleware(async (to, from) => {
+  // Check if route requires auth (default: true)
   const requiresAuth = to.meta.requiresAuth !== false
-
-  // Redirect to login if not authenticated
-  if (requiresAuth && !authStore.isAuthenticated) {
+  
+  if (!requiresAuth) return
+  
+  // For server-side: check cookie directly
+  if (process.server) {
+    const authCookie = useCookie('auth_token')
+    if (!authCookie.value) {
+      return navigateTo('/login')
+    }
+    return
+  }
+  
+  // For client-side: use store
+  const authStore = useAuthStore()
+  if (!authStore.isAuthenticated) {
     return navigateTo('/login')
   }
 })

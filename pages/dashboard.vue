@@ -380,7 +380,8 @@ import { useDS160Store } from '~/stores/ds160'
 import { useAuthStore } from '~/stores/auth'
 
 definePageMeta({
-  layout: 'default'
+  layout: 'default',
+  middleware: 'auth'
 })
 
 const store = useDS160Store()

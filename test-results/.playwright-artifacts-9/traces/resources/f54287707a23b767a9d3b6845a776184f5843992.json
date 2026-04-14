@@ -1,0 +1,7 @@
+{
+  "error": true,
+  "url": "http://localhost:3000/api/user/me",
+  "statusCode": 401,
+  "statusMessage": "Server Error",
+  "message": "Unauthorized"
+}

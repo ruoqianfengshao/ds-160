@@ -1,0 +1,7 @@
+{
+  "error": true,
+  "url": "http://localhost:3000/api/auth/login",
+  "statusCode": 500,
+  "statusMessage": "Server Error",
+  "message": "登录失败，请稍后重试"
+}

@@ -1,42 +1,42 @@
 {
-  "passed": 0,
-  "failed": 5,
+  "passed": 1,
+  "failed": 4,
   "skipped": 0,
   "tests": [
     {
       "testId": "E2E-001",
       "name": "User Registration",
       "status": "FAIL",
-      "error": "Health check failed: Application not responding after 5 health check attempts",
-      "timestamp": "2026-04-14T09:49:37.132Z"
+      "error": "page.waitForNavigation: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================",
+      "timestamp": "2026-04-14T14:49:10.901Z"
     },
     {
       "testId": "E2E-002",
       "name": "User Login",
       "status": "FAIL",
-      "error": "Health check failed: Application not responding after 5 health check attempts",
-      "timestamp": "2026-04-14T09:49:37.132Z"
+      "error": "page.waitForNavigation: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================",
+      "timestamp": "2026-04-14T14:49:23.665Z"
     },
     {
       "testId": "E2E-003",
       "name": "Dashboard Access",
       "status": "FAIL",
-      "error": "Health check failed: Application not responding after 5 health check attempts",
-      "timestamp": "2026-04-14T09:49:37.132Z"
+      "error": "page.waitForNavigation: Timeout 30000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================",
+      "timestamp": "2026-04-14T14:49:53.897Z"
     },
     {
       "testId": "E2E-008",
       "name": "Unauthorized Access Control",
       "status": "FAIL",
-      "error": "Health check failed: Application not responding after 5 health check attempts",
-      "timestamp": "2026-04-14T09:49:37.132Z"
+      "error": "Expected redirect to /login, got http://localhost:3000/dashboard",
+      "timestamp": "2026-04-14T14:49:56.724Z"
     },
     {
       "testId": "E2E-009",
       "name": "Form Validation",
-      "status": "FAIL",
-      "error": "Health check failed: Application not responding after 5 health check attempts",
-      "timestamp": "2026-04-14T09:49:37.132Z"
+      "status": "PASS",
+      "error": null,
+      "timestamp": "2026-04-14T14:50:03.063Z"
     }
   ]
 }
