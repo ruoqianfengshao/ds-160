@@ -130,10 +130,13 @@ const handleSignup = async () => {
     })
 
     if (response.success) {
-      // Load user state before navigation
-      await authStore.loadUser()
+      // Set user immediately to authStore (sync)
+      authStore.user = response.user
       
-      // Redirect to dashboard
+      // Ensure state is fully synced before navigation
+      await nextTick()
+      
+      // Navigate after state is synced
       await navigateTo('/dashboard')
     }
   } catch (e: any) {

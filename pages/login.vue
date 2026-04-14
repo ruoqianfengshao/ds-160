@@ -109,10 +109,14 @@ async function handleLogin() {
     })
     
     if (response.success) {
-      // Load user state before navigation
-      await authStore.loadUser()
+      // Set user immediately to authStore (sync)
+      authStore.user = response.user
       
-      router.push('/dashboard')
+      // Ensure state is fully synced before navigation
+      await nextTick()
+      
+      // Navigate after state is synced
+      await router.push('/dashboard')
     }
   } catch (e: any) {
     error.value = e.data?.message || '登录失败，请检查邮箱和密码'
