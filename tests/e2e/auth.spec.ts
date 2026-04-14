@@ -36,8 +36,8 @@ test.describe('Authentication', () => {
   test('should navigate to signup page', async ({ page }) => {
     await page.goto('/login')
     
-    // 点击注册链接
-    await page.getByRole('link', { name: /注册|创建.*账号|create.*account|sign.*up/i }).click()
+    // 点击注册链接（使用 .first() 避免 strict mode violation）
+    await page.getByRole('link', { name: /注册|创建.*账号|create.*account|sign.*up/i }).first().click()
     
     // 应该跳转到注册页面
     await expect(page).toHaveURL(/\/signup/)

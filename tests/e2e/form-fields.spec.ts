@@ -3,45 +3,52 @@ import { test, expect } from '@playwright/test'
 test.describe('DS-160 Form Fields - 完整测试', () => {
   test('Step 1: 个人信息 - 基础字段', async ({ page }) => {
     await page.goto('/form/step-1')
+    await page.waitForLoadState('networkidle')
     
-    // 检查必填字段（使用更精确的选择器）
-    await expect(page.locator('input[placeholder="WANG"]')).toBeVisible() // 姓
-    await expect(page.locator('input[placeholder="MING"]')).toBeVisible() // 名
-    await expect(page.getByLabel(/出生日期|Date of Birth/i)).toBeVisible()
-    await expect(page.getByLabel(/出生城市|City of Birth/i)).toBeVisible()
-    await expect(page.getByLabel(/出生国家|Country.*Birth/i)).toBeVisible()
-    await expect(page.getByLabel(/国籍|Nationality/i)).toBeVisible()
+    // 等待页面加载完成
+    await page.waitForLoadState('networkidle')
+    
+    // 检查必填字段（使用更精确的选择器，增加超时时间）
+    await expect(page.locator('input[placeholder="WANG"]')).toBeVisible({ timeout: 10000 }) // 姓
+    await expect(page.locator('input[placeholder="MING"]')).toBeVisible({ timeout: 10000 }) // 名
+    await expect(page.getByLabel(/出生日期|Date of Birth/i)).toBeVisible({ timeout: 10000 })
+    await expect(page.getByLabel(/出生城市|City of Birth/i)).toBeVisible({ timeout: 10000 })
+    await expect(page.getByLabel(/出生国家|Country.*Birth/i)).toBeVisible({ timeout: 10000 })
+    await expect(page.getByLabel(/国籍|Nationality/i)).toBeVisible({ timeout: 10000 })
   })
 
   test('Step 1: 曾用名联动逻辑', async ({ page }) => {
     await page.goto('/form/step-1')
+    await page.waitForLoadState('networkidle')
     
     const hasOtherNamesCheckbox = page.getByLabel(/曾用其他名字|other names/i)
-    await expect(hasOtherNamesCheckbox).toBeVisible()
+    await expect(hasOtherNamesCheckbox).toBeVisible({ timeout: 10000 })
     await hasOtherNamesCheckbox.check()
     await page.waitForTimeout(300)
   })
 
   test('Step 2: 旅行信息 - 基础字段', async ({ page }) => {
     await page.goto('/form/step-2')
+    await page.waitForLoadState('networkidle')
     
     // 旅行信息字段
-    await expect(page.getByLabel(/旅行目的|Purpose of Trip/i)).toBeVisible()
-    await expect(page.getByLabel(/计划到达日期|Intended.*Arrival/i)).toBeVisible()
-    await expect(page.getByLabel(/计划停留时长|Length of Stay/i)).toBeVisible()
+    await expect(page.getByLabel(/旅行目的|Purpose of Trip/i)).toBeVisible({ timeout: 10000 })
+    await expect(page.getByLabel(/计划到达日期|Intended.*Arrival/i)).toBeVisible({ timeout: 10000 })
+    await expect(page.getByLabel(/计划停留时长|Length of Stay/i)).toBeVisible({ timeout: 10000 })
     
     // 在美地址
-    await expect(page.getByLabel(/街道地址|Street Address/i)).toBeVisible()
-    await expect(page.getByLabel(/城市|City/i)).toBeVisible()
-    await expect(page.getByLabel(/州|State/i)).toBeVisible()
-    await expect(page.getByLabel(/邮编|Zip.*Code/i)).toBeVisible()
+    await expect(page.getByLabel(/街道地址|Street Address/i)).toBeVisible({ timeout: 10000 })
+    await expect(page.getByLabel(/城市|City/i)).toBeVisible({ timeout: 10000 })
+    await expect(page.getByLabel(/州|State/i)).toBeVisible({ timeout: 10000 })
+    await expect(page.getByLabel(/邮编|Zip.*Code/i)).toBeVisible({ timeout: 10000 })
     
     // 费用支付
-    await expect(page.getByLabel(/谁.*付费|Who.*paying/i)).toBeVisible()
+    await expect(page.getByLabel(/谁.*付费|Who.*paying/i)).toBeVisible({ timeout: 10000 })
   })
 
   test('Step 2: 费用支付联动逻辑', async ({ page }) => {
     await page.goto('/form/step-2')
+    await page.waitForLoadState('networkidle')
     
     // 选择"其他人支付"（使用 selectOption 的 label 匹配）
     const payerSelect = page.getByLabel(/谁.*付费|Who.*paying/i)
@@ -54,14 +61,16 @@ test.describe('DS-160 Form Fields - 完整测试', () => {
 
   test('Step 3: 旅行同伴 - 基础字段', async ({ page }) => {
     await page.goto('/form/step-3')
+    await page.waitForLoadState('networkidle')
     
     // 同行者选项
-    await expect(page.getByLabel(/是否.*同行|traveling with/i)).toBeVisible()
-    await expect(page.getByLabel(/团组|group.*organization/i)).toBeVisible()
+    await expect(page.getByLabel(/是否.*同行|traveling with/i)).toBeVisible({ timeout: 10000 })
+    await expect(page.getByLabel(/团组|group.*organization/i)).toBeVisible({ timeout: 10000 })
   })
 
   test('Step 3: 同行者联动逻辑', async ({ page }) => {
     await page.goto('/form/step-3')
+    await page.waitForLoadState('networkidle')
     
     // 勾选"有同行者"
     const hasCompanionsCheckbox = page.getByLabel(/是否.*同行|traveling with/i)
@@ -74,16 +83,18 @@ test.describe('DS-160 Form Fields - 完整测试', () => {
 
   test('Step 4: 前次美国旅行 - 基础字段', async ({ page }) => {
     await page.goto('/form/step-4')
+    await page.waitForLoadState('networkidle')
     
     // 访美记录
-    await expect(page.getByLabel(/曾.*去过美国|been to.*US/i)).toBeVisible()
-    await expect(page.getByLabel(/获得.*签证|issued.*visa/i)).toBeVisible()
-    await expect(page.getByLabel(/被拒签|refused.*visa/i)).toBeVisible()
-    await expect(page.getByLabel(/拒绝入境|refused.*entry/i)).toBeVisible()
+    await expect(page.getByLabel(/曾.*去过美国|been to.*US/i)).toBeVisible({ timeout: 10000 })
+    await expect(page.getByLabel(/获得.*签证|issued.*visa/i)).toBeVisible({ timeout: 10000 })
+    await expect(page.getByLabel(/被拒签|refused.*visa/i)).toBeVisible({ timeout: 10000 })
+    await expect(page.getByLabel(/拒绝入境|refused.*entry/i)).toBeVisible({ timeout: 10000 })
   })
 
   test('Step 4: 访美记录联动逻辑', async ({ page }) => {
     await page.goto('/form/step-4')
+    await page.waitForLoadState('networkidle')
     
     // 勾选"去过美国"
     const hasBeenToUSCheckbox = page.getByLabel(/曾.*去过美国|been to.*US/i)
@@ -96,49 +107,54 @@ test.describe('DS-160 Form Fields - 完整测试', () => {
 
   test('Step 5: 联系地址 - 基础字段', async ({ page }) => {
     await page.goto('/form/step-5')
+    await page.waitForLoadState('networkidle')
     
     // 家庭住址
-    await expect(page.getByLabel(/街道地址|Street Address/i)).toBeVisible()
-    await expect(page.getByLabel(/城市|City/i)).toBeVisible()
-    await expect(page.getByLabel(/省份|Province|State/i)).toBeVisible()
-    await expect(page.getByLabel(/邮编|Postal.*Code/i)).toBeVisible()
+    await expect(page.getByLabel(/街道地址|Street Address/i)).toBeVisible({ timeout: 10000 })
+    await expect(page.getByLabel(/城市|City/i)).toBeVisible({ timeout: 10000 })
+    await expect(page.getByLabel(/省份|Province|State/i)).toBeVisible({ timeout: 10000 })
+    await expect(page.getByLabel(/邮编|Postal.*Code/i)).toBeVisible({ timeout: 10000 })
     
     // 联系方式
-    await expect(page.getByLabel(/主要电话|Primary Phone/i)).toBeVisible()
-    await expect(page.getByLabel(/电子邮箱|Email/i)).toBeVisible()
+    await expect(page.getByLabel(/主要电话|Primary Phone/i)).toBeVisible({ timeout: 10000 })
+    await expect(page.getByLabel(/电子邮箱|Email/i)).toBeVisible({ timeout: 10000 })
   })
 
   test('Step 6: 护照信息 - 基础字段', async ({ page }) => {
     await page.goto('/form/step-6')
+    await page.waitForLoadState('networkidle')
     
     // 护照字段
-    await expect(page.getByLabel(/护照号|Passport Number/i)).toBeVisible()
-    await expect(page.getByLabel(/签发国|Country.*Issuance/i)).toBeVisible()
-    await expect(page.getByLabel(/签发城市|City.*Issued/i)).toBeVisible()
-    await expect(page.getByLabel(/签发日期|Issuance Date/i)).toBeVisible()
-    await expect(page.getByLabel(/到期日期|Expiration Date/i)).toBeVisible()
-    await expect(page.getByLabel(/丢失.*护照|lost.*passport/i)).toBeVisible()
+    await expect(page.getByLabel(/护照号|Passport Number/i)).toBeVisible({ timeout: 10000 })
+    await expect(page.getByLabel(/签发国|Country.*Issuance/i)).toBeVisible({ timeout: 10000 })
+    await expect(page.getByLabel(/签发城市|City.*Issued/i)).toBeVisible({ timeout: 10000 })
+    await expect(page.getByLabel(/签发日期|Issuance Date/i)).toBeVisible({ timeout: 10000 })
+    await expect(page.getByLabel(/到期日期|Expiration Date/i)).toBeVisible({ timeout: 10000 })
+    await expect(page.getByLabel(/丢失.*护照|lost.*passport/i)).toBeVisible({ timeout: 10000 })
   })
 
   test('Step 7: 家庭信息 - 基础字段', async ({ page }) => {
     await page.goto('/form/step-7')
+    await page.waitForLoadState('networkidle')
     
     // 父母信息（使用更精确的标题定位）
-    await expect(page.locator('text=/父亲信息|Father.*Information/i')).toBeVisible()
-    await expect(page.locator('text=/母亲信息|Mother.*Information/i')).toBeVisible()
-    await expect(page.getByLabel(/直系亲属.*美国|immediate relatives.*US/i)).toBeVisible()
+    await expect(page.locator('text=/父亲信息|Father.*Information/i')).toBeVisible({ timeout: 10000 })
+    await expect(page.locator('text=/母亲信息|Mother.*Information/i')).toBeVisible({ timeout: 10000 })
+    await expect(page.getByLabel(/直系亲属.*美国|immediate relatives.*US/i)).toBeVisible({ timeout: 10000 })
   })
 
   test('Step 8: 工作教育 - 基础字段', async ({ page }) => {
     await page.goto('/form/step-8')
+    await page.waitForLoadState('networkidle')
     
     // 职业信息
-    await expect(page.getByLabel(/当前职业|Primary Occupation/i)).toBeVisible()
-    await expect(page.getByLabel(/教育程度|Education/i)).toBeVisible()
+    await expect(page.getByLabel(/当前职业|Primary Occupation/i)).toBeVisible({ timeout: 10000 })
+    await expect(page.getByLabel(/教育程度|Education/i)).toBeVisible({ timeout: 10000 })
   })
 
   test('Step 8: 职业联动逻辑', async ({ page }) => {
     await page.goto('/form/step-8')
+    await page.waitForLoadState('networkidle')
     
     // 选择"在职"
     const occupationSelect = page.getByLabel(/当前职业|Primary Occupation/i)
@@ -151,45 +167,50 @@ test.describe('DS-160 Form Fields - 完整测试', () => {
 
   test('Step 9: 安全问题 - 基础字段', async ({ page }) => {
     await page.goto('/form/step-9')
+    await page.waitForLoadState('networkidle')
     
     // 安全问题（7个复选框）
-    await expect(page.getByLabel(/传染病|communicable disease/i)).toBeVisible()
-    await expect(page.getByLabel(/精神疾病|mental disorder/i)).toBeVisible()
-    await expect(page.getByLabel(/滥用药物|drug abuser/i)).toBeVisible()
-    await expect(page.getByLabel(/被逮捕|arrested/i)).toBeVisible()
-    await expect(page.getByLabel(/违反.*法律|violated.*law/i)).toBeVisible()
-    await expect(page.getByLabel(/卖淫|prostitution/i)).toBeVisible()
-    await expect(page.getByLabel(/恐怖|terrorism/i)).toBeVisible()
+    await expect(page.getByLabel(/传染病|communicable disease/i)).toBeVisible({ timeout: 10000 })
+    await expect(page.getByLabel(/精神疾病|mental disorder/i)).toBeVisible({ timeout: 10000 })
+    await expect(page.getByLabel(/滥用药物|drug abuser/i)).toBeVisible({ timeout: 10000 })
+    await expect(page.getByLabel(/被逮捕|arrested/i)).toBeVisible({ timeout: 10000 })
+    await expect(page.getByLabel(/违反.*法律|violated.*law/i)).toBeVisible({ timeout: 10000 })
+    await expect(page.getByLabel(/卖淫|prostitution/i)).toBeVisible({ timeout: 10000 })
+    await expect(page.getByLabel(/恐怖|terrorism/i)).toBeVisible({ timeout: 10000 })
   })
 
   test('Step 10: 照片上传 - 基础功能', async ({ page }) => {
     await page.goto('/form/step-10')
+    await page.waitForLoadState('networkidle')
     
     // 照片上传区域
-    await expect(page.locator('text=/上传照片|Upload Photo/i')).toBeVisible()
-    await expect(page.locator('text=/照片要求|Photo Requirements/i')).toBeVisible()
+    await expect(page.locator('text=/上传照片|Upload Photo/i')).toBeVisible({ timeout: 10000 })
+    await expect(page.locator('text=/照片要求|Photo Requirements/i')).toBeVisible({ timeout: 10000 })
   })
 
   test('Step 11: 附加信息 - 基础字段', async ({ page }) => {
     await page.goto('/form/step-11')
+    await page.waitForLoadState('networkidle')
     
     // 附加信息输入框
-    await expect(page.getByLabel(/补充说明|Additional Information/i)).toBeVisible()
+    await expect(page.getByLabel(/补充说明|Additional Information/i)).toBeVisible({ timeout: 10000 })
   })
 
   test('Step 12: 审核提交 - 基础字段', async ({ page }) => {
     await page.goto('/form/step-12')
+    await page.waitForLoadState('networkidle')
     
     // 确认复选框
-    await expect(page.getByLabel(/证明.*真实|certify.*true/i)).toBeVisible()
-    await expect(page.getByLabel(/同意.*条款|agree.*terms/i)).toBeVisible()
+    await expect(page.getByLabel(/证明.*真实|certify.*true/i)).toBeVisible({ timeout: 10000 })
+    await expect(page.getByLabel(/同意.*条款|agree.*terms/i)).toBeVisible({ timeout: 10000 })
     
     // 提交按钮
-    await expect(page.getByRole('button', { name: /提交申请|Submit/i })).toBeVisible()
+    await expect(page.getByRole('button', { name: /提交申请|Submit/i })).toBeVisible({ timeout: 10000 })
   })
 
   test('导航栏显示所有步骤', async ({ page }) => {
     await page.goto('/form/step-1')
+    await page.waitForLoadState('networkidle')
     
     // 检查导航栏是否存在（可能包含"Step 1"或"第 1 步"）
     const nav = page.locator('nav, [role="navigation"]').first()
@@ -198,14 +219,16 @@ test.describe('DS-160 Form Fields - 完整测试', () => {
 
   test('表单自动保存提示', async ({ page }) => {
     await page.goto('/form/step-1')
+    await page.waitForLoadState('networkidle')
     
     // 检查自动保存提示
-    await expect(page.locator('text=/自动保存|automatically saved/i')).toBeVisible()
+    await expect(page.locator('text=/自动保存|automatically saved/i')).toBeVisible({ timeout: 10000 })
   })
 
   test('Step 1-2 完整填写流程', async ({ page }) => {
     // Step 1: 填写个人信息
     await page.goto('/form/step-1')
+    await page.waitForLoadState('networkidle')
     
     // 使用 placeholder 精确定位
     await page.locator('input[placeholder="WANG"]').fill('ZHANG')
