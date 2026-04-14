@@ -1,0 +1,174 @@
+{
+  "applicant": {
+    "surname": "ZHANG",
+    "givenNames": "Wei",
+    "fullNameInNativeAlphabet": "张伟",
+    "otherNames": [],
+    "dateOfBirth": "1990-05-15",
+    "cityOfBirth": "Beijing",
+    "countryOfBirth": "China",
+    "nationality": "China",
+    "gender": "Male",
+    "maritalStatus": "Married"
+  },
+  "passport": {
+    "number": "E12345678",
+    "issueDate": "2021-03-10",
+    "expiryDate": "2031-03-09",
+    "issuingCountry": "China",
+    "issuingCity": "Beijing"
+  },
+  "contact": {
+    "homeAddress": {
+      "street": "No. 88 Zhongguancun East Road",
+      "city": "Beijing",
+      "province": "Beijing",
+      "postalCode": "100190",
+      "country": "China"
+    },
+    "phone": {
+      "primary": "+86-138-0000-1234",
+      "secondary": "+86-10-8888-5678"
+    },
+    "email": "zhangwei@example.com",
+    "socialMedia": {
+      "facebook": "",
+      "twitter": "",
+      "linkedin": "zhangwei",
+      "instagram": "",
+      "wechat": "zhangwei1990"
+    }
+  },
+  "travel": {
+    "purpose": "Tourism",
+    "purposeCode": "B2",
+    "specificPurpose": "Sightseeing and visiting friends",
+    "intendedArrivalDate": "2026-08-15",
+    "intendedLengthOfStay": "14 days",
+    "addressInUS": {
+      "street": "123 Broadway",
+      "city": "New York",
+      "state": "NY",
+      "zipCode": "10001",
+      "contactName": "John Smith",
+      "contactPhone": "+1-212-555-1234"
+    },
+    "payingForTrip": "Self",
+    "travelCompanions": [
+      {
+        "surname": "ZHANG",
+        "givenNames": "Li",
+        "relationship": "Spouse"
+      }
+    ]
+  },
+  "previousUSTravel": {
+    "hasVisitedUS": true,
+    "lastVisit": {
+      "date": "2019-07-10",
+      "lengthOfStay": "10 days"
+    },
+    "hasBeenIssuedUSVisa": true,
+    "lastVisa": {
+      "issueDate": "2019-06-15",
+      "visaNumber": "98765432",
+      "wasCancelled": false
+    },
+    "hasBeenDeniedVisa": false,
+    "hasBeenDeniedEntry": false
+  },
+  "family": {
+    "father": {
+      "surname": "ZHANG",
+      "givenNames": "Jian",
+      "dateOfBirth": "1960-03-20",
+      "isInUS": false
+    },
+    "mother": {
+      "surname": "LI",
+      "givenNames": "Mei",
+      "dateOfBirth": "1962-08-12",
+      "isInUS": false
+    },
+    "spouse": {
+      "surname": "ZHANG",
+      "givenNames": "Li",
+      "dateOfBirth": "1992-11-25",
+      "nationality": "China",
+      "cityOfBirth": "Shanghai",
+      "countryOfBirth": "China",
+      "addressSameAsApplicant": true
+    },
+    "children": []
+  },
+  "workEducation": {
+    "currentOccupation": "Software Engineer",
+    "employer": {
+      "name": "Beijing Tech Company Ltd.",
+      "address": {
+        "street": "No. 10 Haidian Road",
+        "city": "Beijing",
+        "province": "Beijing",
+        "postalCode": "100080",
+        "country": "China"
+      },
+      "phone": "+86-10-6666-8888",
+      "monthlySalary": 25000,
+      "currency": "CNY",
+      "startDate": "2015-07-01",
+      "duties": "Develop and maintain web applications"
+    },
+    "previousEmployment": [
+      {
+        "employer": "Shanghai Software Co.",
+        "position": "Junior Developer",
+        "startDate": "2012-08-01",
+        "endDate": "2015-06-30"
+      }
+    ],
+    "education": {
+      "highestLevel": "Bachelor's Degree",
+      "school": "Tsinghua University",
+      "city": "Beijing",
+      "province": "Beijing",
+      "country": "China",
+      "courseOfStudy": "Computer Science",
+      "attendedFrom": "2008-09-01",
+      "attendedTo": "2012-06-30"
+    }
+  },
+  "security": {
+    "hasContagiousDisease": false,
+    "hasMentalDisorder": false,
+    "isDrugAbuser": false,
+    "hasCommittedCrimes": false,
+    "hasBeenArrested": false,
+    "hasViolatedControlledSubstanceLaw": false,
+    "hasEngagedInProstitution": false,
+    "hasBeenInvolvedInHumanTrafficking": false,
+    "hasAssistedInIllegalEntry": false,
+    "hasViolatedCustodyOrder": false,
+    "hasWithheldChildCustody": false,
+    "hasVotedIllegally": false,
+    "hasRenouncesCitizenshipForTax": false,
+    "memberOfTerroristOrganization": false,
+    "memberOfTotalitarianParty": false,
+    "participatedInGenocide": false,
+    "participatedInTorture": false,
+    "committedExtrajudicialKilling": false,
+    "engagedInChildSoldierRecruitment": false,
+    "participatedInReligiousFreedomViolations": false,
+    "participatedInCoercivePopulationControl": false,
+    "participatedInTransplantOfHumanOrgans": false,
+    "soughtImmunityFromProsecution": false,
+    "explanation": null
+  },
+  "additionalInfo": {
+    "languagesSpoken": ["Chinese (Mandarin)", "English"],
+    "countriesVisited": ["Thailand", "Japan", "Singapore", "South Korea"],
+    "specialSkills": ["Programming", "Data Analysis"],
+    "hasServedInMilitary": false,
+    "hasSpecializedSkillsOrTraining": true,
+    "skillsDescription": "Professional software development, web technologies"
+  }
+}
