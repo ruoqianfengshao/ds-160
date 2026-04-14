@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test'
-import applicantData from '../fixtures/realistic-applicant.json' with { type: 'json' }
+import applicantData from '../fixtures/realistic-applicant.json'
 
 /**
  * 数据同步测试
