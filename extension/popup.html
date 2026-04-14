@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DS-160 Helper</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      width: 320px;
+      padding: 16px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #f9fafb;
+    }
+    
+    .header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+    }
+    
+    .header h1 {
+      font-size: 18px;
+      font-weight: 600;
+    }
+    
+    .header p {
+      font-size: 12px;
+      opacity: 0.9;
+      margin-top: 4px;
+    }
+    
+    .status {
+      background: white;
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 12px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    
+    .status-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    
+    .status-item:last-child {
+      margin-bottom: 0;
+    }
+    
+    .status-label {
+      font-size: 14px;
+      color: #6b7280;
+    }
+    
+    .status-value {
+      font-size: 14px;
+      font-weight: 600;
+      color: #1f2937;
+    }
+    
+    .status-badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+    
+    .badge-active {
+      background: #d1fae5;
+      color: #065f46;
+    }
+    
+    .badge-inactive {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+    
+    .actions {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    
+    button {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    
+    .btn-primary {
+      background: #667eea;
+      color: white;
+    }
+    
+    .btn-primary:hover {
+      background: #5568d3;
+    }
+    
+    .btn-secondary {
+      background: white;
+      color: #667eea;
+      border: 1px solid #667eea;
+    }
+    
+    .btn-secondary:hover {
+      background: #f3f4f6;
+    }
+    
+    .btn-danger {
+      background: #ef4444;
+      color: white;
+    }
+    
+    .btn-danger:hover {
+      background: #dc2626;
+    }
+    
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    
+    .message {
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      margin-top: 12px;
+      display: none;
+    }
+    
+    .message.success {
+      background: #d1fae5;
+      color: #065f46;
+      display: block;
+    }
+    
+    .message.error {
+      background: #fee2e2;
+      color: #991b1b;
+      display: block;
+    }
+    
+    .loading {
+      display: none;
+      text-align: center;
+      padding: 12px;
+      color: #6b7280;
+      font-size: 14px;
+    }
+    
+    .loading.active {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>DS-160 Helper</h1>
+    <p>表单自动填充助手</p>
+  </div>
+
+  <div id="status" class="status">
+    <div class="status-item">
+      <span class="status-label">页面状态</span>
+      <span class="status-badge badge-inactive" id="pageStatus">未检测</span>
+    </div>
+    <div class="status-item">
+      <span class="status-label">已保存草稿</span>
+      <span class="status-value" id="draftCount">0</span>
+    </div>
+    <div class="status-item">
+      <span class="status-label">当前步骤</span>
+      <span class="status-value" id="currentStep">--</span>
+    </div>
+  </div>
+
+  <div class="actions">
+    <button id="fillForm" class="btn-primary">
+      <span id="fillText">自动填充表单</span>
+    </button>
+    <button id="saveDraft" class="btn-secondary">
+      保存当前进度
+    </button>
+    <button id="loadDraft" class="btn-secondary">
+      加载已保存草稿
+    </button>
+    <button id="clearData" class="btn-danger">
+      清除所有数据
+    </button>
+  </div>
+
+  <div id="message" class="message"></div>
+  <div id="loading" class="loading">
+    <div>处理中...</div>
+  </div>
+
+  <script src="scripts/popup.js"></script>
+</body>
+</html>
