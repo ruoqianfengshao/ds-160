@@ -130,13 +130,17 @@ const handleSignup = async () => {
     })
 
     if (response.success) {
-      // Set user in authStore first
+      // Ensure authStore is populated before navigation
+      // This prevents race conditions in auth middleware
       authStore.setUser(response.user)
       
-      // Wait for DOM update
+      // Wait for store update to propagate
       await nextTick()
       
-      // Use Nuxt's navigateTo for proper client-side navigation
+      // Force middleware to recognize auth by loading user again
+      await authStore.loadUser()
+      
+      // Now navigate - middleware will see authenticated state
       await navigateTo('/dashboard', { replace: true })
     }
   } catch (e: any) {

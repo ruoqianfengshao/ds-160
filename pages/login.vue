@@ -30,6 +30,7 @@
               required
               class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
               placeholder="邮箱地址"
+              @keydown.enter.prevent="handleLogin"
             />
           </div>
           <div>
@@ -43,6 +44,7 @@
               required
               class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
               placeholder="密码"
+              @keydown.enter.prevent="handleLogin"
             />
           </div>
         </div>
@@ -109,18 +111,20 @@ async function handleLogin() {
     })
     
     if (response.success) {
-      // Set user in authStore first
+      // Ensure authStore is populated before navigation
       authStore.setUser(response.user)
       
-      // Wait for DOM update
+      // Wait for store update
       await nextTick()
       
-      // Use Nuxt's navigateTo for proper client-side navigation
-      // replace: true prevents back button issues
+      // Force load user to sync with cookie
+      await authStore.loadUser()
+      
+      // Navigate with authenticated state
       await navigateTo('/dashboard', { replace: true })
     }
   } catch (e: any) {
-    error.value = e.data?.message || '登录失败，请检查邮箱和密码'
+    error.value = e.data?.message || '登录失败,请检查邮箱和密码'
   } finally {
     loading.value = false
   }
