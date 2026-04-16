@@ -1,0 +1,68 @@
+name: E2E Tests (Vercel)
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  test-vercel:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Install Playwright browsers
+        run: npx playwright install chromium --with-deps
+      
+      - name: Wait for Vercel deployment
+        run: |
+          echo "Waiting 90 seconds for Vercel deployment to complete..."
+          sleep 90
+      
+      - name: Health check Vercel deployment
+        run: |
+          echo "Checking Vercel deployment health..."
+          for i in {1..10}; do
+            if curl -s -o /dev/null -w "%{http_code}" https://ds-160-ten.vercel.app/ | grep -q "200"; then
+              echo "✅ Vercel deployment is healthy"
+              exit 0
+            fi
+            echo "Attempt $i/10 failed, waiting 10s..."
+            sleep 10
+          done
+          echo "❌ Vercel deployment health check failed"
+          exit 1
+      
+      - name: Run E2E tests against Vercel
+        run: npx playwright test
+        env:
+          CI: true
+          BASE_URL: https://ds-160-ten.vercel.app
+      
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report-vercel
+          path: playwright-report/
+          retention-days: 7
+      
+      - name: Upload screenshots
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-screenshots
+          path: test-screenshots/
+          retention-days: 7

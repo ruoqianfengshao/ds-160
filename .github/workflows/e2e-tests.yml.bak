@@ -1,0 +1,94 @@
+name: E2E Tests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: ds160_test
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Setup test database
+        run: |
+          # Install PostgreSQL client
+          sudo apt-get update
+          sudo apt-get install -y postgresql-client
+          
+          # Run migrations (if exists)
+          PGPASSWORD=postgres psql -h localhost -U postgres -d ds160_test -f supabase/schema.sql || echo "Schema file not found, skipping"
+        env:
+          POSTGRES_URL: postgresql://postgres:postgres@localhost:5432/ds160_test
+
+      - name: Build application
+        run: npm run build
+        env:
+          POSTGRES_URL: postgresql://postgres:postgres@localhost:5432/ds160_test
+          JWT_SECRET: test-secret-key-for-ci-only
+
+      - name: Start preview server
+        run: |
+          npm run preview -- --port 3000 > preview.log 2>&1 &
+          echo $! > preview.pid
+          echo "Server PID: $(cat preview.pid)"
+        env:
+          NODE_ENV: production
+          POSTGRES_URL: postgresql://postgres:postgres@localhost:5432/ds160_test
+          JWT_SECRET: test-secret-key-for-ci-only
+
+      - name: Wait for server
+        run: npx wait-on http://localhost:3000 -t 60000 -i 2000 --verbose
+
+      - name: Check server status
+        run: |
+          echo "=== Checking server status ==="
+          curl -v http://localhost:3000 || echo "Curl failed"
+          echo "=== Node processes ==="
+          ps aux | grep node || echo "No node processes found"
+          echo "=== Port 3000 status ==="
+          netstat -tuln | grep 3000 || echo "Port 3000 not listening"
+          echo "=== Preview server logs ==="
+          cat preview.log | tail -50
+
+      - name: Run Playwright tests
+        run: npx playwright test
+        env:
+          CI: true
+          POSTGRES_URL: postgresql://postgres:postgres@localhost:5432/ds160_test
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7
