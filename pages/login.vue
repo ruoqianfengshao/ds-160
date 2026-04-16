@@ -111,16 +111,21 @@ async function handleLogin() {
     })
     
     if (response.success) {
-      // Ensure authStore is populated before navigation
+      // Set user in store immediately
       authStore.setUser(response.user)
       
-      // Wait for store update
-      await nextTick()
+      // Small delay to ensure cookie is set and readable
+      await new Promise(resolve => setTimeout(resolve, 100))
       
-      // Force load user to sync with cookie
-      await authStore.loadUser()
+      // Reload user from cookie to ensure sync
+      const loadedUser = await authStore.loadUser()
       
-      // Navigate with authenticated state
+      // Verify auth state is ready
+      if (!loadedUser) {
+        throw new Error('Failed to verify authentication state')
+      }
+      
+      // Now navigate - middleware will see the authenticated state
       await navigateTo('/dashboard', { replace: true })
     }
   } catch (e: any) {
