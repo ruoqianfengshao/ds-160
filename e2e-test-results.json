@@ -1,6 +1,6 @@
 {
-  "passed": 1,
-  "failed": 4,
+  "passed": 2,
+  "failed": 3,
   "skipped": 0,
   "tests": [
     {
@@ -8,35 +8,39 @@
       "name": "User Registration",
       "status": "FAIL",
       "error": "page.waitForURL: Timeout 15000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation to \"**/dashboard\" until \"load\"\n============================================================",
-      "timestamp": "2026-04-14T17:01:21.745Z"
+      "timestamp": "2026-04-16T05:39:47.667Z"
     },
     {
       "testId": "E2E-002",
       "name": "User Login",
       "status": "FAIL",
       "error": "page.waitForURL: Timeout 15000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation to \"**/dashboard\" until \"load\"\n============================================================",
-      "timestamp": "2026-04-14T17:01:40.611Z"
+      "timestamp": "2026-04-16T05:40:05.581Z"
     },
     {
       "testId": "E2E-003",
       "name": "Dashboard Access",
       "status": "FAIL",
       "error": "page.waitForURL: Timeout 15000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation to \"**/dashboard\" until \"load\"\n============================================================",
-      "timestamp": "2026-04-14T17:01:56.747Z"
+      "timestamp": "2026-04-16T05:40:23.434Z"
     },
     {
       "testId": "E2E-008",
-      "name": "Unauthorized Access Control",
-      "status": "FAIL",
-      "error": "Expected redirect to /login, got http://localhost:3000/dashboard",
-      "timestamp": "2026-04-14T17:02:00.621Z"
+      "name": "Unauthenticated Dashboard Access (Freemium Model)",
+      "status": "PASS",
+      "error": null,
+      "timestamp": "2026-04-16T05:40:24.347Z"
     },
     {
       "testId": "E2E-009",
       "name": "Form Validation",
       "status": "PASS",
       "error": null,
-      "timestamp": "2026-04-14T17:02:07.559Z"
+      "timestamp": "2026-04-16T05:40:29.307Z"
     }
-  ]
+  ],
+  "duration": "59.98s",
+  "baseUrl": "http://localhost:3000",
+  "testEmail": "e2etest1776317969356@example.com",
+  "timestamp": "2026-04-16T05:40:29.334Z"
 }

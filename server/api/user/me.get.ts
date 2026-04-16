@@ -32,7 +32,7 @@ export default defineEventHandler(async (event) => {
 
     // Get profile
     const profileResult = await sql`
-      SELECT * FROM profiles WHERE id = ${user.id}
+      SELECT * FROM profiles WHERE user_id = ${user.id}
     `
 
     return {

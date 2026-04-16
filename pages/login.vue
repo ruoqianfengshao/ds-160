@@ -111,21 +111,21 @@ async function handleLogin() {
     })
     
     if (response.success) {
-      // Set user in store immediately
-      authStore.setUser(response.user)
+      // Small delay to ensure cookie is set and propagated
+      await new Promise(resolve => setTimeout(resolve, 200))
       
-      // Small delay to ensure cookie is set and readable
-      await new Promise(resolve => setTimeout(resolve, 100))
-      
-      // Reload user from cookie to ensure sync
+      // Reload user from server (cookie-based) to get full profile
       const loadedUser = await authStore.loadUser()
       
       // Verify auth state is ready
       if (!loadedUser) {
+        console.error('Failed to load user after login')
         throw new Error('Failed to verify authentication state')
       }
       
-      // Now navigate - middleware will see the authenticated state
+      console.log('User loaded successfully:', loadedUser)
+      
+      // Now navigate - both server and client middleware will see authenticated state
       await navigateTo('/dashboard', { replace: true })
     }
   } catch (e: any) {

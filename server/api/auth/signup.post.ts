@@ -45,19 +45,23 @@ export default defineEventHandler(async (event) => {
     // Hash password
     const passwordHash = await bcrypt.hash(password, 10)
 
-    // Create user
-    const userResult = await sql`
+    // Create user (Miaoda DB doesn't support RETURNING, need separate SELECT)
+    await sql`
       INSERT INTO users (email, password_hash)
       VALUES (${email}, ${passwordHash})
-      RETURNING id, email, created_at
+    `
+    
+    // Fetch the created user
+    const userResult = await sql`
+      SELECT id, email, created_at FROM users WHERE email = ${email}
     `
 
     const user = userResult.rows[0]
 
     // Create profile
     await sql`
-      INSERT INTO profiles (id, full_name, plan, sync_count, sync_limit)
-      VALUES (${user.id}, ${fullName || null}, 'free', 0, 3)
+      INSERT INTO profiles (user_id, full_name)
+      VALUES (${user.id}, ${fullName || null})
     `
 
     // Generate JWT

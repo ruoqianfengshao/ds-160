@@ -1,4 +1,5 @@
-import { sql } from '@vercel/postgres'
+// Switch to Miaoda Database (managed PostgreSQL service)
+import { sql } from './miaoda-db'
 
 export { sql }
 
@@ -12,12 +13,11 @@ export interface User {
 
 export interface Profile {
   id: string
+  user_id: string
   full_name?: string
-  avatar_url?: string
-  plan: 'free' | 'premium' | 'enterprise'
-  sync_count: number
-  sync_limit: number
-  sync_reset_at: Date
+  purpose?: string
+  visa_type?: string
+  country?: string
   created_at: Date
   updated_at: Date
 }
